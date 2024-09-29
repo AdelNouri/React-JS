@@ -4,7 +4,7 @@
 //     render() {
 //         return (
 //             <div>
-//                 <p>شمارنده : {Math.floor(Math.random() * 1000)}</p>
+//                 <p>شمارنده : {this.props.count}</p>
 //             </div>
 //         )
 //     }
@@ -15,10 +15,12 @@
 
 //---------------------------------------------------//
 
-const Counter = () => {
+const Counter = (props) => {
+    console.log(props);
     return (
         <div>
-            <p>شمارنده : {Math.floor(Math.random() * 1000)}</p>
+            <p>شمارنده : {props.count}</p>
+            <p>{props.children}</p>
         </div>
     )
 }
