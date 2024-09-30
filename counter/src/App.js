@@ -26,6 +26,7 @@ const App = () => {
             <h1>شمارنده ی من</h1>
             <br></br>
             <Counter count={5} myArray={[1,2,3,4]} firstName='Adel'/>
+            <Counter/>
             <Counter count={10}>
                 این شمارنده ی من است
             </Counter>
