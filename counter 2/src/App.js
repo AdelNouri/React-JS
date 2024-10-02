@@ -31,14 +31,23 @@
 
 //---------------------------------------------------//
 import { useState } from 'react';
+import Counter from './components/Counter.jsx'
 
 const App = () => {
     const [count, setCount] = useState(1)
     const [name, setName] = useState('Adel Nouri')
     const [age, setAge] = useState(15)
 
-    const changeCount = () => {
-        setCount(4)
+    const increaseCount = () => {
+        setCount(count + 1)
+    }
+
+    const decreaseCount = () => {
+        setCount(count - 1)
+    }
+
+    const resetCount = () => {
+        setCount(0)
     }
 
     return (
@@ -46,10 +55,7 @@ const App = () => {
             <header>
                 <h1>شمارنده ی من</h1>
             </header>
-            <p>{count}</p>
-            <p>{name}</p>
-            <p>{age}</p>
-
+            <Counter/>
         </div>
     )
 }
