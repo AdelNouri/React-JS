@@ -32,7 +32,8 @@
 //---------------------------------------------------//
 import { useState } from 'react';
 import Counter from './components/Counter.jsx'
-import './App.css'
+// import './css/App.css'
+import styles from './css/App.module.css'
 
 const App = () => {
     const [count, setCount] = useState(0)
@@ -51,14 +52,14 @@ const App = () => {
         setCount(0)
     }
 
-    const titleStyle = {color: 'aqua', border: '1px solid white', padding: '0 0 10px 0'}
+    const titleStyle = { color: 'aqua', border: '1px solid white', padding: '0 0 10px 0' }
 
     return (
-        <div className='App'>
-            <header className='App-header'>
+        <div className={styles.App}>
+            <header className={styles.Appheader}>
                 <h1 style={titleStyle}>شمارنده ی من</h1>
             </header>
-            <Counter inc={increaseCount} dec={decreaseCount} rest={resetCount} count={count}/>
+            <Counter inc={increaseCount} dec={decreaseCount} rest={resetCount} count={count} />
         </div>
     )
 }
