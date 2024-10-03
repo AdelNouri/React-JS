@@ -32,9 +32,10 @@
 //---------------------------------------------------//
 import { useState } from 'react';
 import Counter from './components/Counter.jsx'
+import './App.css'
 
 const App = () => {
-    const [count, setCount] = useState(1)
+    const [count, setCount] = useState(0)
     const [name, setName] = useState('Adel Nouri')
     const [age, setAge] = useState(15)
 
@@ -50,14 +51,18 @@ const App = () => {
         setCount(0)
     }
 
+    const titleStyle = {color: 'aqua', border: '1px solid white', padding: '0 0 10px 0'}
+
     return (
-        <div>
-            <header>
-                <h1>شمارنده ی من</h1>
+        <div className='App'>
+            <header className='App-header'>
+                <h1 style={titleStyle}>شمارنده ی من</h1>
             </header>
-            <Counter/>
+            <Counter inc={increaseCount} dec={decreaseCount} rest={resetCount} count={count}/>
         </div>
     )
 }
+
+
 
 export default App
