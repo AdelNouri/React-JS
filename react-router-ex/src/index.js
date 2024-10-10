@@ -1,17 +1,49 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import "./index.css";
 
 import App from "./App";
+import Books from "./components/Books";
+import About from "./components/About";
+import Book from "./components/Book";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <App />
+      <Routes>
+        <Route path="/" element={<App />}>
+          <Route path="/books" element={<Books />}>
+            <Route 
+            index
+            element={
+              <main style={{padding: '1rem'}}>
+                <p>کتاب مورد نظر خود را وارد کنید</p>
+              </main>
+            }/>
+            <Route path=":bookID" element={<Book />} />
+          </Route>
+          <Route path="/about" element={<About />} />
+        </Route>
+      </Routes>
     </BrowserRouter>
-  </React.StrictMode>,
+  </React.StrictMode>
 );
+
+// For Single page application
+
+// const root = ReactDOM.createRoot(document.getElementById("root"));
+// root.render(
+//   <React.StrictMode>
+//     <BrowserRouter>
+//       <Routes>
+//         <Route path="/" element={<App/>}/>
+//         <Route path="/books" element={<Books/>}/>
+//         <Route path="/about" element={<About/>}/>
+//       </Routes>
+//     </BrowserRouter>
+//   </React.StrictMode>,
+// );
