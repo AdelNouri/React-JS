@@ -28,6 +28,11 @@ root.render(
           </Route>
           <Route path="/about" element={<About />} />
         </Route>
+        <Route path='*' element={
+          <main style={{padding: "1rem 2.5rem"}}>
+            <h2>گشتم نبود نگرد نیست</h2>
+          </main>
+        }/>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
