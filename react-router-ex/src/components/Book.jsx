@@ -35,7 +35,7 @@ const Book = () => {
   } else {
     return (
       <main style={{ padding: "1rem 2.5rem" }}>
-        <h2>کتاب مورد نظر یافت نشد</h2>
+        <h4>کتاب مورد نظر یافت نشد</h4>
       </main>
     );
   }
