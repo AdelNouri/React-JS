@@ -1,6 +1,9 @@
 import { Component } from "react";
 import "./App.css";
 
+// import Clock from "./components/Clock";
+import FuncClock from "./components/FuncClock";
+
 // NOTE Mounting LifeCycle In Class Component
 
 // Constructor
@@ -13,17 +16,35 @@ class App extends Component {
     super();
 
     this.state = {date: new Date(), showClock: true, color: false};
+
+    this.colorChange = this.colorChange.bind(this);
+    this.clockChange = this.clockChange.bind(this);
   }
 
   tick() {
     this.setState({date: new Date()})
   }
 
+  clockChange() {
+    this.setState({showClock: !this.state.showClock});
+  }
+
+  colorChange() {
+    this.setState({color: !this.state.color});
+  }
+
   render() {
+    const {date, showClock, color} = this.state;
+
     return (
       <div className="App">
         <p>hello my friends</p>
-        <p>ساعت در حال حاضر برابر : {this.state.date.toLocaleTimeString()}</p>
+        {
+          showClock ? <FuncClock date={date} color={color}/> : null 
+        }
+        <hr/>
+        <button onClick={this.clockChange}>نمایش ساعت</button>
+        <button onClick={this.colorChange}>تغییر رنگ</button>
       </div>
     );
   }
