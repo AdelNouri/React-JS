@@ -8,6 +8,7 @@ import {
   Contacts,
   Navbar
 } from "./components";
+import { getAllContacts, getAllGroups } from "./services/contactService";
 
 const App = () => {
   const [loading, setLoading] = useState(false);
@@ -18,10 +19,8 @@ const App = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const {data: contactData} = await axios.get("http://localhost:9000/contacts");
-        const { data: groupsData } = await axios.get(
-          "http://localhost:9000/groups"
-        );
+        const { data: contactData } = await getAllContacts()
+        const { data: groupsData } = await getAllGroups()
         setContact(contactData);
         setGroups(groupsData);
 
