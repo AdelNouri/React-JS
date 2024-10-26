@@ -18,7 +18,7 @@ export const getAllGroups = () => {
 }
 
 export const getGroup = (groupId) => {
-    const url = `${SERVER_URL}/contacts/${groupId}`
+    const url = `${SERVER_URL}/groups/${groupId}`
     return axios.get(url)
 }
 
