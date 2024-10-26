@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Spinner from "../SpinnerGIF"
 import { PINK, CURRENTLINE, ORANGE} from "../../helpers/colors";
 
-const Contacts = ({contacts, loading}) => {
+const Contacts = ({contacts, loading, confirmDelete}) => {
     console.log(contacts.length)
   return (
     <>
@@ -26,7 +26,9 @@ const Contacts = ({contacts, loading}) => {
           <section className="container">
             <div className="row">
               {
-                contacts.length > 0 ? contacts.map( (c) => <Contact key={c.id} contact={c}/>)
+                contacts.length > 0 ? contacts.map( (c) => <Contact key={c.id} contact={c} confirmDelete={() => {
+                  confirmDelete(c.id, c.fullname)
+                }}/>)
                     :
                 (
                     <div className="text-center py-5" style={{backgroundColor: CURRENTLINE}}>
