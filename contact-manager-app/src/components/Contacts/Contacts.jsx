@@ -4,15 +4,14 @@ import Spinner from "../SpinnerGIF"
 import { PINK, CURRENTLINE, ORANGE} from "../../helpers/colors";
 
 const Contacts = ({contacts, loading, confirmDelete}) => {
-    console.log(contacts.length)
   return (
     <>
       <section className="container">
         <div className="grid">
           <div className="row">
             <div className="col">
-              <p className="h3">
-                <Link to={'/contacts/add'}className="btn mx-2" style={{ backgroundColor: PINK }}>
+              <p className="h3 float-end">
+                <Link to={'/contacts/add'}className="btn m-2" style={{ backgroundColor: PINK }}>
                   ساخت مخاطب جدید
                   <i className="fa fa-plus-circle mx-2" />
                 </Link>

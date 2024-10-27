@@ -18,12 +18,14 @@ import {
 
 import "./App.css";
 import { CURRENTLINE, YELLOW, COMMENT, PURPLE, FOREGROUND } from "./helpers/colors";
+import SearchContact from './components/Contacts/SearchContact';
 
 const App = () => {
   const [loading, setLoading] = useState(false);
   const [getContacts, setContacts] = useState([]);
   const [forceRender, setForceRender] = useState(false);
   const [getGroups, setGroups] = useState([]);
+  const [allFilteredContacts, setAllFilteredContacts] = useState([]);
   const [getContact, setContact] = useState({
     fullname: "",
     photo: "",
@@ -32,6 +34,7 @@ const App = () => {
     job: "",
     group: ""
   });
+  const [query, setQuery] = useState({text: ''});
 
   const navigate = useNavigate();
 
@@ -44,6 +47,7 @@ const App = () => {
         const { data: groupsData } = await getAllGroups();
 
         setContacts(contactsData);
+        setAllFilteredContacts(contactsData)
         setGroups(groupsData);
 
         setLoading(false);
@@ -149,14 +153,22 @@ const App = () => {
     }
   };
 
+  const searchContact = event => {
+    setQuery({... query, text: event.target.value})
+    const allContacts = getContacts.filter((contact) => {
+      return contact.fullname.toLowerCase().includes(event.target.value.toLowerCase());
+    })
+    setAllFilteredContacts(allContacts)
+  }
+
   return (
     <div className="App">
-      <Navbar />
+      <Navbar search={searchContact} />
       <Routes>
         <Route path="/" element={<Navigate to="/contacts" />} />
         <Route
           path="/contacts"
-          element={<Contacts contacts={getContacts} loading={loading} confirmDelete={confirm}/>}
+          element={<Contacts contacts={allFilteredContacts} loading={loading} confirmDelete={confirm}/>}
         />
         <Route
           path="/contacts/add"

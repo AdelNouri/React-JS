@@ -52,7 +52,7 @@ const EditContact = ({forceRender, setForceRender}) => {
       ...state,
       contact: {
         ...state.contact,
-        [event.target.name]: [event.target.value],
+        [event.target.name]: event.target.value,
       },
     });
   };
