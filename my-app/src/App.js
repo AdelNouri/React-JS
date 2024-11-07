@@ -1,24 +1,49 @@
-import logo from './logo.svg';
-import Hello from './hello.js'
-import './App.css';
+import logo from "./logo.svg";
+import Hello from "./hello.js";
+import { useState } from "react";
+import ShowLine from "./Components/ShowLine";
+import "./App.css";
 
 function App() {
-  const me = 'Adel'
+  // const me = 'Adel'
+  // const users = [
+  //    {
+  //     firstname: 'Mohammad Reza'
+  //    },
+  //    {
+  //     firstname: 'Ali'
+  //    },
+  //    {
+  //     firstname: 'Mufokoli'
+  //    }
+  // ]
+
   const users = [
-     {
-      firstname: 'Mohammad Reza'
-     },
-     {
-      firstname: 'Ali'
-     }, 
-     {
-      firstname: 'Mufokoli'
-     }
-  ]
+    "Mohammad Reza",
+    "Ali",
+    "Mufokoli",
+    "1",
+    "2",
+    "3",
+    "4",
+    "5",
+    "6"
+  ];
+
+  const [index, setIndex] = useState(0);
+
+  setInterval(() => {
+    setIndex(index + 1)
+  }, 2000)
+
+  // const showUser = () => {
+  //   index += 1
+  //   console.log(index)
+  // }
 
   return (
     <div className="App">
-      <Hello/>
+      {/* <Hello/>
       {me? <h1>Hello {me}</h1> : <h1>Hello User</h1>}
       
       {users.map(user => (
@@ -38,7 +63,9 @@ function App() {
         >
           Learn React
         </a>
-      </header>
+      </header> */}
+
+      <ShowLine lirycs={users} index={index}/>
     </div>
   );
 }
