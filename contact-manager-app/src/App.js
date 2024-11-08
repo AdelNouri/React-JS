@@ -31,7 +31,7 @@ import { ContactContext } from "./context/contactContext";
 const App = () => {
   const [loading, setLoading] = useState(false);
   const [contacts, setContacts] = useState([]);
-  const [filteredContacts, setAllFilteredContacts] = useState([]);
+  const [filteredContacts, setFilteredContacts] = useState([]);
   const [groups, setGroups] = useState([]);
   const [contact, setContact] = useState();
   const [contactQuery, setContactQuery] = useState({ text: "" });
@@ -47,7 +47,7 @@ const App = () => {
         const { data: groupsData } = await getAllGroups();
 
         setContacts(contactsData);
-        setAllFilteredContacts(contactsData);
+        setFilteredContacts(contactsData);
         setGroups(groupsData);
 
         setLoading(false);
@@ -63,10 +63,15 @@ const App = () => {
   const createContactForm = async event => {
     event.preventDefault();
     try {
-      const { status } = await createContact(contact);
+      setLoading((prevLoading) => !prevLoading);
+      const { status, data } = await createContact(contact);
 
       if (status === 201) {
+        const allContacts = [...contacts , data]
+        setContacts(allContacts);
+        setFilteredContacts
         setContact({});
+        setLoading((prevLoading) => !prevLoading);
         navigate("/contacts");
       }
     } catch (err) {
@@ -143,7 +148,7 @@ const App = () => {
         .toLowerCase()
         .includes(event.target.value.toLowerCase());
     });
-    setAllFilteredContacts(allContacts);
+    setFilteredContacts(allContacts);
   };
 
   return (
@@ -164,29 +169,19 @@ const App = () => {
       }}
     >
       <div className="App">
-        <Navbar search={contactSearch} query={contactQuery} />
+        <Navbar/>
         <Routes>
           <Route path="/" element={<Navigate to="/contacts" />} />
           <Route
             path="/contacts"
             element={
-              <Contacts
-                contacts={filteredContacts}
-                loading={loading}
-                confirmDelete={confirmDelete}
-              />
+              <Contacts/>
             }
           />
           <Route
             path="/contacts/add"
             element={
-              <AddContact
-                loading={loading}
-                setContactInfo={onContactChange}
-                contact={contact}
-                groups={groups}
-                createContactForm={createContactForm}
-              />
+              <AddContact/>
             }
           />
           <Route path="/contacts/:contactId" element={<ViewContact />} />
