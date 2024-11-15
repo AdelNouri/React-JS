@@ -63,15 +63,15 @@ const App = () => {
   const createContactForm = async event => {
     event.preventDefault();
     try {
-      setLoading((prevLoading) => !prevLoading);
+      setLoading(prevLoading => !prevLoading);
       const { status, data } = await createContact(contact);
 
       if (status === 201) {
-        const allContacts = [...contacts , data]
+        const allContacts = [...contacts, data];
         setContacts(allContacts);
-        setFilteredContacts
+        setFilteredContacts(allContacts);
         setContact({});
-        setLoading((prevLoading) => !prevLoading);
+        setLoading(prevLoading => !prevLoading);
         navigate("/contacts");
       }
     } catch (err) {
@@ -127,16 +127,29 @@ const App = () => {
   };
 
   const removeContact = async contactId => {
+    // NOTE
+    // 1- forceRender => setForceRender
+    // 2- Server Request
+    // 3- Delete Local State
+    // 4- Delete State Before Server Request*
+    const allContacts = [...contacts];
     try {
       setLoading(true);
-      const response = await deleteContact(contactId);
-      if (response) {
-        const { data: contactData } = await getAllContacts();
-        setContact(contactData);
+
+      const updatedContact = allContacts.filter(c => c.id != contactId);
+      setContacts(updatedContact);
+      setFilteredContacts(updatedContact);
+
+      setLoading(false);
+      const { status } = await deleteContact(contactId);
+      if (status != 200) {
+        setContacts(allContacts);
+        setFilteredContacts(allContacts);
         setLoading(false);
       }
     } catch (err) {
-      console.log(err);
+      setContacts(allContacts);
+      setFilteredContacts(allContacts);
       setLoading(false);
     }
   };
@@ -157,33 +170,24 @@ const App = () => {
         loading,
         setLoading,
         contact,
-        setContact,
+        setContacts,
+        setFilteredContacts,
         contactQuery,
         contacts,
-        filteredContacts,
         groups,
+        filteredContacts,
         onContactChange,
         deleteContact: confirmDelete,
         createContact: createContactForm,
-        contactSearch,
+        contactSearch
       }}
     >
       <div className="App">
-        <Navbar/>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Navigate to="/contacts" />} />
-          <Route
-            path="/contacts"
-            element={
-              <Contacts/>
-            }
-          />
-          <Route
-            path="/contacts/add"
-            element={
-              <AddContact/>
-            }
-          />
+          <Route path="/contacts" element={<Contacts />} />
+          <Route path="/contacts/add" element={<AddContact />} />
           <Route path="/contacts/:contactId" element={<ViewContact />} />
           <Route path="/contacts/edit/:contactId" element={<EditContact />} />
         </Routes>

@@ -6,7 +6,7 @@ import Spinner from "../SpinnerGIF"
 import { PINK, CURRENTLINE, ORANGE} from "../../helpers/colors";
 
 const Contacts = () => {
-  const { contacts, loading, deleteContact } = useContext(ContactContext);
+  const { loading, deleteContact, filteredContacts } = useContext(ContactContext);
 
   return (
     <>
@@ -29,7 +29,7 @@ const Contacts = () => {
           <section className="container">
             <div className="row">
               {
-                contacts.length > 0 ? contacts.map( (c) => <Contact key={c.id} contact={c} deleteContact={() => {
+                filteredContacts.length > 0 ? filteredContacts.map( (c) => <Contact key={c.id} contact={c} deleteContact={() => {
                   deleteContact(c.id, c.fullname)
                 }}/>)
                     :
