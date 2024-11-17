@@ -15,10 +15,12 @@ const Contacts = () => {
           <div className="row">
             <div className="col">
               <p className="h3 float-end">
+                
                 <Link to={'/contacts/add'}className="btn m-2" style={{ backgroundColor: PINK }}>
                   ساخت مخاطب جدید
                   <i className="fa fa-plus-circle mx-2" />
                 </Link>
+
               </p>
             </div>
           </div>
