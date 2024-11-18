@@ -40,11 +40,13 @@ const EditContact = () => {
 
   const submitForm = async (event) => {
     event.preventDefault();
+    
     // NOTE
     // 1- forceRender => setForceRender
     // 2- Server Request
     // 3- Update Local State*
     // 4- Update State Before Server Request*
+
     try {
       setLoading(true);
       const { data, status } = await updateContact(contact, contactId);
