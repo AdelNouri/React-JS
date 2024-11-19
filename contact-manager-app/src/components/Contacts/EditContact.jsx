@@ -1,6 +1,5 @@
 import { useEffect, useState, useContext } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-
 import {
   getContact,
   updateContact,
