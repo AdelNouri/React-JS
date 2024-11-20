@@ -142,6 +142,7 @@ const App = () => {
 
       setLoading(false);
       const { status } = await deleteContact(contactId);
+      
       if (status != 200) {
         setContacts(allContacts);
         setFilteredContacts(allContacts);
