@@ -1,4 +1,6 @@
+import Accordion from "./components/Accordion";
 import UseRefExample from "./hooks/UseRefExample";
+import UseMemoExample from "./hooks/UseMemoExample";
 
 const App = () => {
   return (
@@ -7,7 +9,14 @@ const App = () => {
         <h2>یادگیری و استفاده از هوک های ری اکت 🚀</h2>
       </div>
       <hr className="text-danger" />
-      <UseRefExample />
+      <Accordion title="مثال هوک useRef" heading="headingOne">
+        <UseRefExample />
+      </Accordion>
+      <hr className="text-primary" />
+      <Accordion title="مثال هوک useMemo" heading="headingTwo">
+        <UseMemoExample />
+      </Accordion>
+      <hr className="text-success" />
     </div>
   );
 };
