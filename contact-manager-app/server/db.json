@@ -10,6 +10,15 @@
         "3"
       ],
       "id": 2
+    },
+    {
+      "fullname": "عادل نوری",
+      "photo": "https://avatar.iran.liara.run/public/5",
+      "mobile": "091325468415",
+      "email": "adelnouri0231@gmail.com",
+      "job": "web developer",
+      "group": "2",
+      "id": 3
     }
   ],
   "groups": [

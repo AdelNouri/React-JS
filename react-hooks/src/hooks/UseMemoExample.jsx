@@ -11,6 +11,7 @@ const superSlowFunction = (num) => {
 };
 
 const UseMemoExample = () => {
+  
   const [number, setNumber] = useState(0);
   const [colorChange, setColorChange] = useState(false);
 
