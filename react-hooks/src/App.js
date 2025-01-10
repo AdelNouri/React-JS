@@ -1,6 +1,5 @@
-import Accordion from "./components/Accordion";
-import UseRefExample from "./hooks/UseRefExample";
-import UseMemoExample from "./hooks/UseMemoExample";
+import { UseMemoExample, UseRefExample, UseCallbackExample } from "./hooks";
+import Accordion from './components/Accordion.jsx'
 
 const App = () => {
   return (
@@ -13,9 +12,13 @@ const App = () => {
         <UseRefExample />
       </Accordion>
       <hr className="text-primary" />
-      {/* <Accordion title="مثال هوک useMemo" heading="headingTwo"> */}
+      <Accordion title="مثال هوک useMemo" heading="headingTwo">
         <UseMemoExample />
-      {/* </Accordion> */}
+      </Accordion>
+      <hr className="text-primary" />
+      <Accordion title="مثال هوک useCallback" heading="headingTwo">
+        <UseCallbackExample />
+      </Accordion>
       <hr className="text-success" />
     </div>
   );
