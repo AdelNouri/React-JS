@@ -37,13 +37,13 @@ const App = () => {
         <UseCallbackExample />
       </Accordion>
       <hr className="text-dark" />
-      {/* <Accordion title="مثال آموزشی هوک useReducer" heading="headingFour"> */}
+      <Accordion title="مثال آموزشی هوک useReducer" heading="headingFour">
         <UseReducerExample />
-      {/* </Accordion> */}
-      {/* <hr className="text-info" />
-      <Accordion title="مثال آموزشی هوک useLayoutEffect" heading="headingFive">
-        <UseLayoutEffectExample />
       </Accordion>
+      <hr className="text-info" />
+      {/* <Accordion title="مثال آموزشی هوک useLayoutEffect" heading="headingFive"> */}
+        <UseLayoutEffectExample />
+      {/* </Accordion>
       <hr className="text-warning" />
       <Accordion title="آشنایی با هوک useDeferredValue" heading="headingSix">
         <UseDeferredValueExample />

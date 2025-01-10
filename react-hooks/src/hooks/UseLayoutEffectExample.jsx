@@ -1,21 +1,25 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useLayoutEffect } from "react";
 
 /*
  * NOTE
  * -- Steps before useEffect function runs
  * 1- User take action -> clicking some button
  * 2- React changes the state
- * 3- React handles DOM mutation
+ * 3- React handles DOM mutation (useLayoutEffect)
  * 4- Browser prints DOM changes to browser screen
- * 5- After browser prints DOM changes to screen then useEffects fires
+ * 5- After browser prints DOM changes to screen then useEffects fires (useEffect)
  */
 
 const UseLayoutEffectExample = () => {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    // console.log(`useEffect(🚀) : ${count}`);
+    console.log(`useEffect(🚀) : ${count}`);
   }, [count]);
+
+  useLayoutEffect(() => {
+    console.log(`useLayoutEffect : ${count}`)
+  }, [count])
 
   return (
     <div className="mx-auto mt-5 d-grid gap-3 w-50">

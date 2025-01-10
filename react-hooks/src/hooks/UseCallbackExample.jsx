@@ -5,7 +5,7 @@ const List = ({ getItems }) => {
 
   useEffect(() => {
     setItems(getItems());
-    console.log("Updating Items 👷‍♂️");
+    // console.log("Updating Items 👷‍♂️");
   }, [getItems]);
 
   return items.map((item, index) => <div key={index}>{item}</div>);

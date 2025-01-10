@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 
 const superSlowFunction = (num) => {
-  console.log("Super Slow Function Is Running 🦥");
+  // console.log("Super Slow Function Is Running 🦥");
   let count = 0;
   //NOTE Delay the return
   while (count <= 1000000000) {
@@ -25,7 +25,7 @@ const UseMemoExample = () => {
   }, [colorChange]);
 
   useEffect(() => {
-    console.log("Background Changed 🌈");
+    // console.log("Background Changed 🌈");
   }, [appStyle]);
 
   return (

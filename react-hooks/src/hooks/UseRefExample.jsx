@@ -15,7 +15,7 @@ const UseRefExample = () => {
   });
 
   useEffect(() => {
-    console.log(inputRef.current);
+    // console.log(inputRef.current);
     // inputRef.current.placeholder = "سلام";
     // inputRef.current.className = "bg-danger";
   }, []);
