@@ -20,7 +20,7 @@ const UseMemoExample = () => {
   //referential equality
   const appStyle = useMemo(() => {
     return {
-      backgroundColor: colorChange ? "tomato" : "white",
+      backgroundColor: colorChange ? "tomato" : "blue",
     };
   }, [colorChange]);
 

@@ -13,9 +13,9 @@ const App = () => {
         <UseRefExample />
       </Accordion>
       <hr className="text-primary" />
-      <Accordion title="مثال هوک useMemo" heading="headingTwo">
+      {/* <Accordion title="مثال هوک useMemo" heading="headingTwo"> */}
         <UseMemoExample />
-      </Accordion>
+      {/* </Accordion> */}
       <hr className="text-success" />
     </div>
   );
