@@ -5,7 +5,7 @@ const List = ({ value }) => {
     const numbersList = [];
     let count = 0;
 
-    while (count <= 20000) {
+    while (count <= 1000) {
       numbersList.push(
         <div key={count}>{`عدد برابر است با : ${value} 🏎 `}</div>
       );
