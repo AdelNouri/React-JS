@@ -41,9 +41,9 @@ const App = () => {
         <UseReducerExample />
       </Accordion>
       <hr className="text-info" />
-      {/* <Accordion title="مثال آموزشی هوک useLayoutEffect" heading="headingFive"> */}
+      <Accordion title="مثال آموزشی هوک useLayoutEffect" heading="headingFive">
         <UseLayoutEffectExample />
-      {/* </Accordion>
+      </Accordion>
       <hr className="text-warning" />
       <Accordion title="آشنایی با هوک useDeferredValue" heading="headingSix">
         <UseDeferredValueExample />
@@ -53,12 +53,12 @@ const App = () => {
         <UseTransition />
       </Accordion>
       <hr className="text-success" />
-      <Accordion
+      {/* <Accordion
         title="آشنایی با هوک useImperativeHandle"
         heading="headingEight"
-      >
+      > */}
         <UseImperativeHandleExample />
-      </Accordion>
+      {/* </Accordion>
       <hr className="text-danger" />
       <Accordion title="آشنایی با هوک های شخصی سازی شده" heading="headingNine">
         <CustomHooks />

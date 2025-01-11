@@ -1,4 +1,18 @@
-import { useRef } from "react";
+import { useRef, forwardRef, useImperativeHandle } from "react";
+
+let BootstrapInput = (props, ref) => {
+  const inputRef = useRef();
+
+  useImperativeHandle(ref, () => ({
+    focus: () => {
+      // inputRef.current.focus();
+      alert("سلام من اجرا شدم");
+    },
+  }));
+
+  return <input ref={inputRef} {...props} />;
+};
+BootstrapInput = forwardRef(BootstrapInput);
 
 const UseImperativeHandleExample = () => {
   const inputRef = useRef(null);
@@ -15,7 +29,7 @@ const UseImperativeHandleExample = () => {
 
       <hr className="bg-danger" />
 
-      <input type="text" className="form-control" ref={inputRef} />
+      <BootstrapInput type="text" className="form-control" ref={inputRef} />
 
       <button className="btn btn-block btn-success" onClick={handleFocus}>
         تمرکز بنما 👀{" "}
