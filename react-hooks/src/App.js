@@ -45,13 +45,13 @@ const App = () => {
         <UseLayoutEffectExample />
       </Accordion>
       <hr className="text-warning" />
-      {/* <Accordion title="آشنایی با هوک useDeferredValue" heading="headingSix"> */}
+      <Accordion title="آشنایی با هوک useDeferredValue" heading="headingSix">
         <UseDeferredValueExample />
-      {/* </Accordion> */}
+      </Accordion>
       <hr className="text-primary" />
-      {/* <Accordion title="آشنایی با هوک useTransition" heading="headingSeven">
+      {/* <Accordion title="آشنایی با هوک useTransition" heading="headingSeven"> */}
         <UseTransition />
-      </Accordion> */}
+      {/* </Accordion> */}
       <hr className="text-success" />
       <Accordion
         title="آشنایی با هوک useImperativeHandle"

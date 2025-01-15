@@ -1,21 +1,24 @@
-import { useState } from "react";
+import { useState, useTransition } from "react";
 
 const UseTransitionExample = () => {
+  const [isPending, startTransition] = useTransition()
   const [value, setValue] = useState(0);
   const [list, setList] = useState([]);
 
   const handleChange = (e) => {
     setValue(e.target.value);
 
-    const numbersList = [];
-    let count = 0;
+    startTransition(() => {
+      const numbersList = [];
+      let count = 0;
 
-    while (count <= 20000) {
-      numbersList.push(e.target.value);
-      count++;
-    }
+      while (count <= 10000) {
+        numbersList.push(e.target.value);
+        count++;
+      }
 
-    setList(numbersList);
+      setList(numbersList);
+    })
   };
 
   return (
@@ -25,9 +28,10 @@ const UseTransitionExample = () => {
       </h5>
 
       <input type="number" value={value} onChange={handleChange} />
-      {list.map((item, index) => {
+      {isPending ? 'در حال بارگذاری ...' : list.map((item, index) => {
         return <div key={index}>{`عدد برابر است با : ${item} 🚓`}</div>;
       })}
+      
     </div>
   );
 };
