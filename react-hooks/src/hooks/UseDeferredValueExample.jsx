@@ -1,22 +1,25 @@
-import { useState, useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect, useDeferredValue } from "react";
 
 const List = ({ value }) => {
+  const deferredValue = useDeferredValue(value);
+
   const list = useMemo(() => {
     const numbersList = [];
     let count = 0;
 
-    while (count <= 1000) {
+    while (count <= 20000) {
       numbersList.push(
-        <div key={count}>{`عدد برابر است با : ${value} 🏎 `}</div>
+        <div key={count}>{`عدد برابر است با : ${deferredValue} 🏎 `}</div>
       );
       count++;
     }
     return numbersList;
-  }, [value]);
+  }, [deferredValue]);
 
   useEffect(() => {
     console.log(`Value : ${value}`);
-  }, [value]);
+    console.log(`DeferredValue : ${deferredValue}`);
+  }, [value, deferredValue]);
 
   return list;
 };
@@ -33,6 +36,7 @@ const UseDeferredValueExample = () => {
       <input
         type="number"
         value={value}
+        className="form-control"
         onChange={(e) => setValue(e.target.value)}
       />
       {value !== 0 ? <List value={value} /> : null}
