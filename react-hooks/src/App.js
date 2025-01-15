@@ -49,9 +49,9 @@ const App = () => {
         <UseDeferredValueExample />
       </Accordion>
       <hr className="text-primary" />
-      {/* <Accordion title="آشنایی با هوک useTransition" heading="headingSeven"> */}
+      <Accordion title="آشنایی با هوک useTransition" heading="headingSeven">
         <UseTransition />
-      {/* </Accordion> */}
+      </Accordion>
       <hr className="text-success" />
       <Accordion
         title="آشنایی با هوک useImperativeHandle"
@@ -60,10 +60,10 @@ const App = () => {
         <UseImperativeHandleExample />
       </Accordion>
       <hr className="text-danger" />
-      {/* <Accordion title="آشنایی با هوک های شخصی سازی شده" heading="headingNine">
+      {/* <Accordion title="آشنایی با هوک های شخصی سازی شده" heading="headingNine"> */}
         <CustomHooks />
-      </Accordion>
-      <hr className="text-dark" /> */}
+      {/* </Accordion> */}
+      <hr className="text-dark" />
     </div>
   );
 };

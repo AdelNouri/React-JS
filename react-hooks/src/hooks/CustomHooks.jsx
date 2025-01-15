@@ -1,7 +1,20 @@
 import { useState, useEffect } from "react";
 
+const useFetch = (url) => {
+  const [data, setData] = useState([{name: 'عادل'}, {name: 'علی'}]);
+  
+  // useEffect(() => {
+  //   fetch(url)
+  //     .then((res) => res.json())
+  //     .then((data) => setData(data))
+  // }, [url])
+
+  return [data];
+}
+
 const CustomHooks = () => {
   const [showUsers, setShowUsers] = useState(false);
+  const [users] = useFetch("https://jsonplaceholder.ir/users")
 
   return (
     <div className="mx-auto mt-5 d-grid gap-3 w-50">
@@ -12,18 +25,18 @@ const CustomHooks = () => {
       <hr className="bg-dark" />
       <button
         className="btn btn-block btn-success"
-        /* onClick={() => setShowUsers((prevShowUsers) => !prevShowUsers)} */
+        onClick={() => setShowUsers((prevShowUsers) => !prevShowUsers)}
       >
         نمایش کاربران عزیز 😇
       </button>
 
-      {/* {showUsers */}
-      {/*   ? users.map((user, index) => ( */}
-      {/*       <div key={index}> */}
-      {/*         <p className="alert alert-light">{`نام : ${user.name}`}</p> */}
-      {/*       </div> */}
-      {/*     )) */}
-      {/*   : null} */}
+      {showUsers
+        ? users.map((user, index) => (
+            <div key={index}>
+              <p className="alert alert-light">{`نام : ${user.name}`}</p>
+            </div>
+          ))
+        : null}
     </div>
   );
 };
