@@ -37,8 +37,6 @@ import styles from './css/App.module.css'
 
 const App = () => {
     const [count, setCount] = useState(0)
-    const [name, setName] = useState('Adel Nouri')
-    const [age, setAge] = useState(15)
 
     const increaseCount = () => {
         setCount(count + 1)
