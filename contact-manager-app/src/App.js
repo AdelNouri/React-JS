@@ -28,8 +28,10 @@ import SearchContact from "./components/Contacts/SearchContact";
 
 import { ContactContext } from "./context/contactContext";
 
-import _ from 'lodash'
+import _ from "lodash";
 // underLine or underScore
+
+import { contactSchema } from "./validations/contactValidation";
 
 const App = () => {
   const [loading, setLoading] = useState(false);
@@ -37,6 +39,7 @@ const App = () => {
   const [filteredContacts, setFilteredContacts] = useState([]);
   const [groups, setGroups] = useState([]);
   const [contact, setContact] = useState();
+  const [errors, setErrors] = useState([]);
 
   const navigate = useNavigate();
 
@@ -66,6 +69,9 @@ const App = () => {
     event.preventDefault();
     try {
       setLoading(prevLoading => !prevLoading);
+
+      await contactSchema.validate(contact, {abortEarly: false});
+
       const { status, data } = await createContact(contact);
 
       if (status === 201) {
@@ -73,11 +79,14 @@ const App = () => {
         setContacts(allContacts);
         setFilteredContacts(allContacts);
         setContact({});
+        setErrors([]);
         setLoading(prevLoading => !prevLoading);
         navigate("/contacts");
       }
     } catch (err) {
       console.log(err.message);
+      setErrors(err.inner)
+      setLoading(prevLoading => !prevLoading);
     }
   };
 
@@ -144,7 +153,7 @@ const App = () => {
 
       setLoading(false);
       const { status } = await deleteContact(contactId);
-      
+
       if (status != 200) {
         setContacts(allContacts);
         setFilteredContacts(allContacts);
@@ -169,11 +178,13 @@ const App = () => {
   //     }))
   //   }, 1000)
 
-  const contactSearch = _.debounce((query) => {
-    setFilteredContacts(contacts.filter(contact => {
-      return contact.fullname.toLowerCase().includes(query.toLowerCase());
-    }))
-  }, 1000)
+  const contactSearch = _.debounce(query => {
+    setFilteredContacts(
+      contacts.filter(contact => {
+        return contact.fullname.toLowerCase().includes(query.toLowerCase());
+      })
+    );
+  }, 1000);
 
   return (
     <ContactContext.Provider
@@ -189,7 +200,8 @@ const App = () => {
         onContactChange,
         deleteContact: confirmDelete,
         createContact: createContactForm,
-        contactSearch
+        contactSearch,
+        errors
       }}
     >
       <div className="App">

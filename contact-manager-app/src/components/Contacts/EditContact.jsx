@@ -95,7 +95,6 @@ const EditContact = () => {
                         className="form-control"
                         value={contact.fullname}
                         onChange={onContactChange}
-                        required={true}
                         placeholder="نام و نام خانوادگی"
                       />
                     </div>
@@ -106,7 +105,6 @@ const EditContact = () => {
                         value={contact.photo}
                         onChange={onContactChange}
                         className="form-control"
-                        required={true}
                         placeholder="آدرس تصویر"
                       />
                     </div>
@@ -117,7 +115,6 @@ const EditContact = () => {
                         className="form-control"
                         value={contact.mobile}
                         onChange={onContactChange}
-                        required={true}
                         placeholder="شماره موبایل"
                       />
                     </div>
@@ -128,7 +125,6 @@ const EditContact = () => {
                         className="form-control"
                         value={contact.email}
                         onChange={onContactChange}
-                        required={true}
                         placeholder="آدرس ایمیل"
                       />
                     </div>
@@ -139,7 +135,6 @@ const EditContact = () => {
                         className="form-control"
                         value={contact.job}
                         onChange={onContactChange}
-                        required={true}
                         placeholder="شغل"
                       />
                     </div>
@@ -148,7 +143,6 @@ const EditContact = () => {
                         name="group"
                         value={contact.group}
                         onChange={onContactChange}
-                        required={true}
                         className="form-control"
                       >
                         <option value="">انتخاب گروه</option>

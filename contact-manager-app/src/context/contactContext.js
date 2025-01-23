@@ -12,5 +12,6 @@ export const ContactContext = createContext({
     onContactChange: () => {},
     deleteContact: () => {},
     createContact: () => {},
-    contactSearch: () => {}
+    contactSearch: () => {},
+    errors: []
 })
