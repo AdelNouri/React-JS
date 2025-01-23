@@ -30,19 +30,30 @@
 // }
 
 //---------------------------------------------------//
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 import Counter from './components/Counter.jsx'
 // import './css/App.css'
 import styles from './css/App.module.css'
+import throttle from 'lodash.throttle'
 
 const App = () => {
     const [count, setCount] = useState(0)
 
+    const logCount = (count) => {
+        console.log("INCREMENT: " + count)
+    }
+
+    const throttleLog = useCallback(throttle(logCount, 2000), [])
+
     const increaseCount = () => {
         setCount(count + 1)
+        throttleLog(count)
     }
 
     const decreaseCount = () => {
+        if(count === 0) {
+            return alert("بهتره دیگه منفی نباشیم")
+        }
         setCount(count - 1)
     }
 
