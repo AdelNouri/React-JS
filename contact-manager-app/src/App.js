@@ -28,6 +28,9 @@ import SearchContact from "./components/Contacts/SearchContact";
 
 import { ContactContext } from "./context/contactContext";
 
+import _ from 'lodash'
+// underLine or underScore
+
 const App = () => {
   const [loading, setLoading] = useState(false);
   const [contacts, setContacts] = useState([]);
@@ -154,19 +157,23 @@ const App = () => {
     }
   };
 
-  let filterTimeout;
-  const contactSearch = query => {
-    clearTimeout(filterTimeout);
+  // let filterTimeout;
+  // const contactSearch = query => {
+  //   clearTimeout(filterTimeout);
 
-    filterTimeout = setTimeout(() => {
-      setFilteredContacts(contacts.filter(contact => {
-        return contact.fullname
-          .toLowerCase()
-          .includes(query.toLowerCase());
-      }))
-    }, 1000)
+  //   filterTimeout = setTimeout(() => {
+  //     setFilteredContacts(contacts.filter(contact => {
+  //       return contact.fullname
+  //         .toLowerCase()
+  //         .includes(query.toLowerCase());
+  //     }))
+  //   }, 1000)
 
-  }
+  const contactSearch = _.debounce((query) => {
+    setFilteredContacts(contacts.filter(contact => {
+      return contact.fullname.toLowerCase().includes(query.toLowerCase());
+    }))
+  }, 1000)
 
   return (
     <ContactContext.Provider
