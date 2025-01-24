@@ -8,14 +8,12 @@ import {
   EditContact,
   Navbar
 } from "./components";
-
 import {
   getAllContacts,
   getAllGroups,
   createContact,
   deleteContact
 } from "./services/contactService";
-
 import "./App.css";
 import {
   CURRENTLINE,
@@ -25,13 +23,10 @@ import {
   FOREGROUND
 } from "./helpers/colors";
 import SearchContact from "./components/Contacts/SearchContact";
-
 import { ContactContext } from "./context/contactContext";
-
 import _ from "lodash";
 // underLine or underScore
 
-import { contactSchema } from "./validations/contactValidation";
 
 const App = () => {
   const [loading, setLoading] = useState(false);
@@ -39,7 +34,6 @@ const App = () => {
   const [filteredContacts, setFilteredContacts] = useState([]);
   const [groups, setGroups] = useState([]);
   const [contact, setContact] = useState();
-  const [errors, setErrors] = useState([]);
 
   const navigate = useNavigate();
 
@@ -65,27 +59,22 @@ const App = () => {
     fetchData();
   }, []);
 
-  const createContactForm = async event => {
-    event.preventDefault();
+  const createContactForm = async (values) => {
     try {
       setLoading(prevLoading => !prevLoading);
 
-      await contactSchema.validate(contact, {abortEarly: false});
-
-      const { status, data } = await createContact(contact);
+      const { status, data } = await createContact(values);
 
       if (status === 201) {
         const allContacts = [...contacts, data];
         setContacts(allContacts);
         setFilteredContacts(allContacts);
         setContact({});
-        setErrors([]);
         setLoading(prevLoading => !prevLoading);
         navigate("/contacts");
       }
     } catch (err) {
       console.log(err.message);
-      setErrors(err.inner)
       setLoading(prevLoading => !prevLoading);
     }
   };
@@ -200,8 +189,7 @@ const App = () => {
         onContactChange,
         deleteContact: confirmDelete,
         createContact: createContactForm,
-        contactSearch,
-        errors
+        contactSearch
       }}
     >
       <div className="App">
