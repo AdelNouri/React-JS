@@ -7,7 +7,7 @@ import { contactSchema } from "../../validations/contactValidation.js";
 import { Formik, Form, ErrorMessage, Field } from 'formik'
 
 const AddContact = () => {
-  const {loading, groups, createContact, onContactChange} = useContext(ContactContext)
+  const {loading, groups, createContact} = useContext(ContactContext)
 
   return (
     <>
