@@ -1,9 +1,10 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useContext } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import {
   getContact,
   updateContact,
 } from "../../services/contactService";
+import { useImmer } from 'use-immer'
 import Spinner from "../SpinnerGIF";
 import { COMMENT, ORANGE, PURPLE } from "../../helpers/colors";
 import { ContactContext } from './../../context/contactContext';
@@ -13,7 +14,7 @@ import { contactSchema} from '../../validations/contactValidation.js'
 const EditContact = () => {
   const { contactId } = useParams();
   const navigate = useNavigate();
-  const [contact, setContact] = useState({});
+  const [contact, setContact] = useImmer({});
   const { contacts, setContacts, setFilteredContacts, loading, setLoading, groups } = useContext(ContactContext)
 
   useEffect(() => {
@@ -40,11 +41,15 @@ const EditContact = () => {
       if (status == 200) {
         setLoading(false);
 
-        const allContacts = [...contacts]
-        const contactIndex = allContacts.indexOf(c => c.id == contactId);
-        allContacts[contactIndex] = {...data};
-        setContacts(allContacts)
-        setFilteredContacts(allContacts)
+        setContact(draft => {
+          const contactIndex = draft.indexOf(c => c.id == contactId)
+          draft[contactIndex] = {...data}
+        })
+
+        setFilteredContacts(draft => {
+          const contactIndex = draft.indexOf(c => c.id == contactId)
+          draft[contactIndex] = {...data}
+        })
 
         navigate("/contacts");
       }
