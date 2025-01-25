@@ -18,7 +18,7 @@ const AddContact = () => {
           <section className="p-3">
             <img
               src={require("../../assets/man-taking-note.png")}
-              height="400px"
+              height="400px" 
               style={{
                 position: "absolute",
                 zIndex: "-1",

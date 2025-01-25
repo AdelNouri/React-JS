@@ -26,14 +26,14 @@ import SearchContact from "./components/Contacts/SearchContact";
 import { ContactContext } from "./context/contactContext";
 import _ from "lodash";
 // underLine or underScore
-
+import { useImmer } from "use-immer";
 
 const App = () => {
-  const [loading, setLoading] = useState(false);
-  const [contacts, setContacts] = useState([]);
-  const [filteredContacts, setFilteredContacts] = useState([]);
-  const [groups, setGroups] = useState([]);
-  const [contact, setContact] = useState();
+  const [loading, setLoading] = useImmer(false);
+  const [contacts, setContacts] = useImmer([]);
+  const [filteredContacts, setFilteredContacts] = useImmer([]);
+  const [groups, setGroups] = useImmer([]);
+  const [contact, setContact] = useImmer();
 
   const navigate = useNavigate();
 
@@ -77,13 +77,6 @@ const App = () => {
       console.log(err.message);
       setLoading(prevLoading => !prevLoading);
     }
-  };
-
-  const onContactChange = event => {
-    setContact({
-      ...contact,
-      [event.target.name]: event.target.value
-    });
   };
 
   const confirmDelete = (contactId, contactFullname) => {
