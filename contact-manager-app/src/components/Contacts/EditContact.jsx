@@ -10,12 +10,13 @@ import { COMMENT, ORANGE, PURPLE } from "../../helpers/colors";
 import { ContactContext } from './../../context/contactContext';
 import {Formik, Form, ErrorMessage, Field} from 'formik'
 import { contactSchema} from '../../validations/contactValidation.js'
+import { toast } from "react-toastify";
 
 const EditContact = () => {
   const { contactId } = useParams();
   const navigate = useNavigate();
   const [contact, setContact] = useImmer({});
-  const { contacts, setContacts, setFilteredContacts, loading, setLoading, groups } = useContext(ContactContext)
+  const { setFilteredContacts, loading, setLoading, groups } = useContext(ContactContext)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -52,6 +53,8 @@ const EditContact = () => {
         })
 
         navigate("/contacts");
+
+        toast.info('مخاطب با موفقیت ویرایش شد')
       }
     } catch (err) {
       console.log(err);

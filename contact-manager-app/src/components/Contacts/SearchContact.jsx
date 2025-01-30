@@ -18,7 +18,8 @@ const SearchContact = () => {
       <input
         dir="rtl"
         type="text"
-        onChange={event => contactSearch(event.target.value)}
+        value={contactQuery.text}
+        onChange={contactSearch}
         className="form-control"
         placeholder="جستجوی مخاطب"
         aria-label="Search"

@@ -27,6 +27,7 @@ import { ContactContext } from "./context/contactContext";
 import _ from "lodash";
 // underLine or underScore
 import { useImmer } from "use-immer";
+import { ToastContainer, toast } from "react-toastify";
 
 const App = () => {
   const [loading, setLoading] = useImmer(false);
@@ -65,6 +66,8 @@ const App = () => {
       const { status, data } = await createContact(values);
 
       if (status === 201) {
+        toast.success('مخاطب با موفقیت ساخته شد')
+
         setContacts(draft => {
           draft.push(data);
         });
@@ -137,6 +140,8 @@ const App = () => {
       setLoading(false);
       const { status } = await deleteContact(contactId);
 
+      toast.error('مخاطب با موفقیت حذف شد')
+
       if (status != 200) {
         setContacts(contactsBackup);
         setFilteredContacts(contactsBackup);
@@ -187,6 +192,7 @@ const App = () => {
       }}
     >
       <div className="App">
+        <ToastContainer rtl={true} position="top-right" theme="dark" />
         <Navbar />
         <Routes>
           <Route path="/" element={<Navigate to="/contacts" />} />
