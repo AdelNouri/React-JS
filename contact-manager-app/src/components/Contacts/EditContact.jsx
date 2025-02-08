@@ -35,7 +35,6 @@ const EditContact = () => {
   }, []);
 
   const submitForm = async (values) => {
-
     try {
       setLoading(true);
       const { data, status } = await updateContact(values, contactId);
