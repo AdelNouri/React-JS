@@ -8,7 +8,6 @@ const ShowLine = ({lirycs, index}) => {
         setLineNumber(index)
     }, [lineNumber])
 
-
     return (
         <>
             <h1>{lineNumber}</h1>
