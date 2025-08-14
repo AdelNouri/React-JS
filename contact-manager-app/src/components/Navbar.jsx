@@ -1,5 +1,6 @@
-import SearchContact from "./Contacts/SearchContact";
 import { useLocation } from "react-router-dom";
+
+import SearchContact from "./Contacts/SearchContact";
 
 import Colorfull from "../hoc/Colorfull";
 import { BACKGROUND, PURPLE } from "../helpers/colors";
