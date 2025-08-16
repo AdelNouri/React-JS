@@ -10,6 +10,5 @@ export {default as Contact} from './Contacts/Contact'
 export {default as SearchContact} from './Contacts/SearchContact'
 
 /* -- Other Components -- */
-
 export {default as Navbar} from './Navbar'
 export {default as SpinnerGIF} from './SpinnerGIF'
