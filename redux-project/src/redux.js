@@ -12,6 +12,10 @@ const increment = (number) => {
 // Reducers 
 (state , action) => newState;
 
+// بسته به پارامترهای دریافتی باید استیت جدید رو محاسبه کنن
+// به هیچ عنوان نباید استیت فعلی رو ویرایش یا تغییر بدن
+// نباید منطق ناهمزماین و محاسبه تصادفی انجام بدن یا هرگونه عواض جانبی دیگر
+
 const initialState = {value: 0}
 
 const counterReducer = (state = initialState, action) => {
