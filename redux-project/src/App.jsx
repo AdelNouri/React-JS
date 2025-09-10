@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import "./App.css";
 
 // import { increment, store, currentValue } from './redux'
-import { increment, decrement, incrementByAmount } from "./fearures/counter/counterSlice";
+import {incrementAsync , increment, decrement, incrementByAmount } from "./fearures/counter/counterSlice";
 
 function App() {
   const [incrementAmount, setIncrementAmount] = useState(0);
@@ -43,6 +43,12 @@ function App() {
             style={{ width: "30px", height: "30px" }}
           />
         </div>
+        <button
+            style={{ marginTop: "10px" }}
+            onClick={() => dispatch(incrementAsync(Number(incrementAmount)))}
+          >
+            Add Amount
+          </button>
       </div>
     </>
   );
