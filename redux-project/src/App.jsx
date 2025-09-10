@@ -1,12 +1,14 @@
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import "./App.css";
 
 // import { increment, store, currentValue } from './redux'
-import { store } from "./app/store";
 import { increment, decrement, incrementByAmount } from "./fearures/counter/counterSlice";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [incrementAmount, setIncrementAmount] = useState(0);
+  const count = useSelector(state => state.counter.value)
+  const dispatch = useDispatch() 
 
   return (
     <>
@@ -14,30 +16,30 @@ function App() {
       <div className="card">
         <button
           style={{ marginRight: "10px" }}
-          onClick={() => store.dispatch(increment(2))}
+          onClick={() => dispatch(increment(2))}
         >
           +
         </button>
-        <button onClick={() => store.dispatch(increment(2))}>
-          count is {store.getState().value}
+        <button onClick={() => dispatch(increment(2))}>
+          count is {count}
         </button>
         <button
           style={{ marginLeft: "10px" }}
-          onClick={() => store.dispatch(decrement(2))}
+          onClick={() => dispatch(decrement(2))}
         >
           -
         </button>
         <div style={{ marginTop: "10px" }}>
           <button
             style={{ marginRight: "10px" }}
-            onClick={() => store.dispatch(incrementByAmount(2))}
+            onClick={() => dispatch(incrementByAmount(Number(incrementAmount)))}
           >
             Add Amount
           </button>
           <input
             type="text"
-            // value={}
-            onChange={(e) => {}}
+            value={incrementAmount}
+            onChange={(e) => setIncrementAmount(e.target.value)}
             style={{ width: "30px", height: "30px" }}
           />
         </div>
