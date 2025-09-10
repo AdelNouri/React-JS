@@ -1,39 +1,49 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
 
 // import { increment, store, currentValue } from './redux'
-import { store } from './app/store'
-import { increment } from './fearures/counter/counterSlice'
+import { store } from "./app/store";
+import { increment, decrement, incrementByAmount } from "./fearures/counter/counterSlice";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
     <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
       <h1>Vite + React</h1>
       <div className="card">
+        <button
+          style={{ marginRight: "10px" }}
+          onClick={() => store.dispatch(increment(2))}
+        >
+          +
+        </button>
         <button onClick={() => store.dispatch(increment(2))}>
           count is {store.getState().value}
         </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
+        <button
+          style={{ marginLeft: "10px" }}
+          onClick={() => store.dispatch(decrement(2))}
+        >
+          -
+        </button>
+        <div style={{ marginTop: "10px" }}>
+          <button
+            style={{ marginRight: "10px" }}
+            onClick={() => store.dispatch(incrementByAmount(2))}
+          >
+            Add Amount
+          </button>
+          <input
+            type="text"
+            // value={}
+            onChange={(e) => {}}
+            style={{ width: "30px", height: "30px" }}
+          />
+        </div>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
