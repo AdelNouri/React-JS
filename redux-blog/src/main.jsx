@@ -1,12 +1,15 @@
-import { Children, StrictMode } from "react";
+import {StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { RouterProvider} from "react-router-dom"
+import { RouterProvider } from "react-router-dom";
+import { Provider } from "react-redux";
 
 import { router } from "./routes";
-
+import { store } from "./store";
 
 createRoot(document.getElementById("root")).render(
-    <StrictMode>
-        <RouterProvider router={router}/>
-    </StrictMode>
+  <StrictMode>
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+  </StrictMode>
 );
