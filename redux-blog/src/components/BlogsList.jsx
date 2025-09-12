@@ -1,9 +1,11 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { blogDeleted, selectAllBlogs } from "../reducers/blogSlice";
 
 const BlogsList = () => {
-  const blogs = useSelector((state) => state.blogs);
+  const blogs = useSelector(selectAllBlogs);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const renderBlogs = blogs.map((blog) => (
     <article key={blog.id} style={{ padding: "1rem" }} className="blog-excerpt">
@@ -14,11 +16,18 @@ const BlogsList = () => {
         className="button muted-button"
         style={{ marginRight: "1rem" }}
       >
-        visit post
+        visit blog
       </Link>
-      <Link to={`/blogs/edit-blog/${blog.id}`} className="button muted-button">
-        edit post
+      <Link
+        to={`/blogs/edit-blog/${blog.id}`}
+        className="button muted-button"
+        style={{ marginRight: "1rem" }}
+      >
+        edit blog
       </Link>
+      <button onClick={() => dispatch(blogDeleted({id: blog.id, title: blog.title, content: blog.content}))} className="button muted-button">
+        delete blog
+      </button>
     </article>
   ));
 

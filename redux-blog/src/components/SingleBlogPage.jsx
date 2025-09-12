@@ -1,12 +1,10 @@
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { selectBlogById } from "../reducers/blogSlice";
 
 const SingleBlogPage = () => {
   const { blogId } = useParams();
-  const blog = useSelector((store) =>
-    store.blogs.find((blog) => blog.id == blogId)
-  );
+  const blog = useSelector((state) => selectBlogById(state, blogId));
 
   if (!blog) {
     return (

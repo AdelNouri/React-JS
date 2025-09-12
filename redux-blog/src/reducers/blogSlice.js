@@ -1,17 +1,19 @@
 import { createSlice, nanoid } from "@reduxjs/toolkit";
 
-const initialState = [
-  {
-    id: nanoid(),
-    title: "first post",
-    content: "content of first post",
-  },
-  {
-    id: nanoid(),
-    title: "seconde post",
-    content: "content of seconde post",
-  },
-];
+const initialState = {
+  blogs: [
+    {
+      id: nanoid(),
+      title: "first post",
+      content: "content of first post",
+    },
+    {
+      id: nanoid(),
+      title: "seconde post",
+      content: "content of seconde post",
+    },
+  ],
+};
 
 const blogsSlice = createSlice({
   name: "blogs",
@@ -19,7 +21,7 @@ const blogsSlice = createSlice({
   reducers: {
     blogAdded: {
       reducer(state, action) {
-        state.push(action.payload);
+        state.blogs.push(action.payload);
       },
       prepare(title, content) {
         return {
@@ -29,16 +31,21 @@ const blogsSlice = createSlice({
     },
     blogUpdated: (state, action) => {
       const { id, title, content } = action.payload;
-      const existingBlog = state.find((blog) => blog.id == id);
+      const existingBlog = state.blogs.find((blog) => blog.id == id);
 
       if (existingBlog) {
         existingBlog.title = title;
         existingBlog.content = content;
       }
     },
+    blogDeleted: (state, action) => {
+      state.blogs = state.blogs.filter(blog => blog.id != action.payload.id)
+    },
   },
 });
 
-export const { blogAdded , blogUpdated} = blogsSlice.actions;
+export const selectAllBlogs = (state) => state.blogs.blogs
+export const selectBlogById = (state, blogId) => state.blogs.blogs.find((blog) => blog.id == blogId)
+export const { blogAdded, blogUpdated, blogDeleted } = blogsSlice.actions;
 
 export default blogsSlice.reducer;
