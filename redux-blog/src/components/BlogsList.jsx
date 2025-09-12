@@ -1,6 +1,7 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { blogDeleted, selectAllBlogs } from "../reducers/blogSlice";
+import ShowTime from "./ShowTime";
 
 const BlogsList = () => {
   const blogs = useSelector(selectAllBlogs);
@@ -9,7 +10,10 @@ const BlogsList = () => {
 
   const renderBlogs = blogs.map((blog) => (
     <article key={blog.id} style={{ padding: "1rem" }} className="blog-excerpt">
-      <h3>{blog.title}</h3>
+      <div style={{ display: "flex " , justifyContent: "space-between"  }}>
+        <h3>{blog.title}</h3>
+        {<ShowTime timestamp={blog.date}/>}
+      </div>
       <p className="blog-content">{blog.content.substring(0, 100)}</p>
       <Link
         to={`/blogs/${blog.id}`}
@@ -25,7 +29,18 @@ const BlogsList = () => {
       >
         edit blog
       </Link>
-      <button onClick={() => dispatch(blogDeleted({id: blog.id, title: blog.title, content: blog.content}))} className="button muted-button">
+      <button
+        onClick={() =>
+          dispatch(
+            blogDeleted({
+              id: blog.id,
+              title: blog.title,
+              content: blog.content,
+            })
+          )
+        }
+        className="button muted-button"
+      >
         delete blog
       </button>
     </article>

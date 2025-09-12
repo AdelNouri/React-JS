@@ -4,11 +4,13 @@ const initialState = {
   blogs: [
     {
       id: nanoid(),
+      date: new Date().toISOString(),
       title: "first post",
       content: "content of first post",
     },
     {
       id: nanoid(),
+      date: new Date().toISOString(),
       title: "seconde post",
       content: "content of seconde post",
     },
@@ -25,7 +27,12 @@ const blogsSlice = createSlice({
       },
       prepare(title, content) {
         return {
-          payload: { id: nanoid(), title, content },
+          payload: {
+            id: nanoid(),
+            date: new Date().toISOString(),
+            title,
+            content,
+          },
         };
       },
     },
@@ -39,13 +46,14 @@ const blogsSlice = createSlice({
       }
     },
     blogDeleted: (state, action) => {
-      state.blogs = state.blogs.filter(blog => blog.id != action.payload.id)
+      state.blogs = state.blogs.filter((blog) => blog.id != action.payload.id);
     },
   },
 });
 
-export const selectAllBlogs = (state) => state.blogs.blogs
-export const selectBlogById = (state, blogId) => state.blogs.blogs.find((blog) => blog.id == blogId)
+export const selectAllBlogs = (state) => state.blogs.blogs;
+export const selectBlogById = (state, blogId) =>
+  state.blogs.blogs.find((blog) => blog.id == blogId);
 export const { blogAdded, blogUpdated, blogDeleted } = blogsSlice.actions;
 
 export default blogsSlice.reducer;
