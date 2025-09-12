@@ -3,13 +3,11 @@ import { createSlice, nanoid } from "@reduxjs/toolkit";
 const initialState = [
   {
     id: nanoid(),
-    date: new Date().toISOString(),
     title: "first post",
     content: "content of first post",
   },
   {
     id: nanoid(),
-    date: new Date().toISOString(),
     title: "seconde post",
     content: "content of seconde post",
   },
@@ -18,7 +16,13 @@ const initialState = [
 const blogsSlice = createSlice({
   name: "blogs",
   initialState: initialState,
-  reducers: {},
+  reducers: {
+    blogAdded: (state, action) => {
+      state.push(action.payload);
+    },
+  },
 });
+
+export const { blogAdded } = blogsSlice.actions;
 
 export default blogsSlice.reducer;
