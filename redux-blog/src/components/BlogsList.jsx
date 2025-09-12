@@ -9,12 +9,18 @@ const BlogsList = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const renderBlogs = blogs.map((blog) => (
+  // for sorting blogs eith time
+
+  // const orderedBlogs = blogs
+  //   .slice()
+  //   .sort((a, b) => b.date.localeCompare(a.date));
+
+  const renderBlogs = [...blogs].reverse().map((blog) => (
     <article key={blog.id} style={{ padding: "1rem" }} className="blog-excerpt">
       <div style={{ display: "flex ", justifyContent: "space-between" }}>
         <h3>{blog.title}</h3>
-        <div style={{display: "flex", gap: "10px"}}>
-           <ShowAuthor userId={blog.user} /> توسط
+        <div style={{ display: "flex", gap: "10px" }}>
+          <ShowAuthor userId={blog.user} /> توسط
           <ShowTime timestamp={blog.date} />
         </div>
       </div>
