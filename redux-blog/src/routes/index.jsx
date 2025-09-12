@@ -3,6 +3,7 @@ import App from "../App";
 import MainLayout from "../layouts/MainLayout";
 import SingleBlogPage from "../components/SingleBlogPage";
 import CreateBlog from "../components/CreateBlog";
+import EditBlog from "../components/EditBlog";
 
 export const router = createBrowserRouter([
     {
@@ -19,6 +20,10 @@ export const router = createBrowserRouter([
             {
                 path: "/blogs/:blogId",
                 element: <SingleBlogPage/>
+            },
+            {
+                path: "/blogs/edit-blog/:blogId",
+                element: <EditBlog/>
             },
             {
                 path: "/blogs/create-blog",

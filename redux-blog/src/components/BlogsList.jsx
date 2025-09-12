@@ -6,11 +6,18 @@ const BlogsList = () => {
   const navigate = useNavigate();
 
   const renderBlogs = blogs.map((blog) => (
-    <article key={blog.id} style={{padding: "1rem"}} className="blog-excerpt">
+    <article key={blog.id} style={{ padding: "1rem" }} className="blog-excerpt">
       <h3>{blog.title}</h3>
       <p className="blog-content">{blog.content.substring(0, 100)}</p>
-      <Link to={`/blogs/${blog.id}`} className="button muted-button">
+      <Link
+        to={`/blogs/${blog.id}`}
+        className="button muted-button"
+        style={{ marginRight: "1rem" }}
+      >
         visit post
+      </Link>
+      <Link to={`/blogs/edit-blog/${blog.id}`} className="button muted-button">
+        edit post
       </Link>
     </article>
   ));
