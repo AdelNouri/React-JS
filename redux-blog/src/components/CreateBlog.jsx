@@ -7,9 +7,8 @@ import { useNavigate } from "react-router-dom";
 const CreateBlog = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const dispatch = useDispatch();
-
 
   const onTitleChange = (e) => {
     setTitle(e.target.value);
@@ -21,10 +20,10 @@ const CreateBlog = () => {
 
   const handleSubmitForm = () => {
     if (title && content) {
-      dispatch(blogAdded({id: nanoid, title, content}));
+      dispatch(blogAdded(title, content));
       setTitle("");
       setContent("");
-      navigate("/")
+      navigate("/");
     }
   };
 
