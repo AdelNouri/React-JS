@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { blogDeleted, selectAllBlogs } from "../reducers/blogSlice";
 import ShowTime from "./ShowTime";
+import ShowAuthor from "./ShowAuthor";
 
 const BlogsList = () => {
   const blogs = useSelector(selectAllBlogs);
@@ -10,9 +11,12 @@ const BlogsList = () => {
 
   const renderBlogs = blogs.map((blog) => (
     <article key={blog.id} style={{ padding: "1rem" }} className="blog-excerpt">
-      <div style={{ display: "flex " , justifyContent: "space-between"  }}>
+      <div style={{ display: "flex ", justifyContent: "space-between" }}>
         <h3>{blog.title}</h3>
-        {<ShowTime timestamp={blog.date}/>}
+        <div style={{display: "flex", gap: "10px"}}>
+           <ShowAuthor userId={blog.user} /> توسط
+          <ShowTime timestamp={blog.date} />
+        </div>
       </div>
       <p className="blog-content">{blog.content.substring(0, 100)}</p>
       <Link

@@ -7,12 +7,14 @@ const initialState = {
       date: new Date().toISOString(),
       title: "first post",
       content: "content of first post",
+      user: "1"
     },
     {
       id: nanoid(),
       date: new Date().toISOString(),
       title: "seconde post",
       content: "content of seconde post",
+      user: "3"
     },
   ],
 };
