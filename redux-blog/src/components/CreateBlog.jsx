@@ -1,13 +1,19 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { blogAdded } from "../reducers/blogSlice";
 import { useNavigate } from "react-router-dom";
 
 const CreateBlog = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
+  const [userId, setUserId] = useState("");
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  const users = useSelector((state) => state.users);
+
+  const canSave = [title, content, userId].every(Boolean)
 
   const onTitleChange = (e) => {
     setTitle(e.target.value);
@@ -17,9 +23,13 @@ const CreateBlog = () => {
     setContent(e.target.value);
   };
 
+  const onAuthorChange = (e) => {
+    setUserId(e.target.value);
+  };
+
   const handleSubmitForm = () => {
-    if (title && content) {
-      dispatch(blogAdded(title, content));
+    if (canSave) {
+      dispatch(blogAdded(title, userId, content));
       setTitle("");
       setContent("");
       navigate("/");
@@ -39,6 +49,14 @@ const CreateBlog = () => {
           onChange={onTitleChange}
         />
 
+        <label htmlFor="blogAuthor">author: </label>
+        <select id="blogAuthor" value={userId} onChange={onAuthorChange}>
+          <option value="">select author</option>
+          {users.map(user => (
+            <option key={user.id} value={user.id}>{user.fullname}</option>
+          ))}
+        </select>
+
         <label htmlFor="blogContent"> blog content: </label>
         <textarea
           name="blogContent"
@@ -47,7 +65,7 @@ const CreateBlog = () => {
           onChange={onContentChange}
         />
 
-        <button type="button" onClick={handleSubmitForm}>
+        <button disabled={!canSave} type="button" onClick={handleSubmitForm}>
           {" "}
           Save blog
         </button>
