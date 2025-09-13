@@ -25,7 +25,7 @@ export const getUser = (userId) => {
 
 export const createBlog = (blog) => {
   const url = `${SERVER_URL}/blogs`;
-  return axios.post(url);
+  return axios.post(url, blog);
 };
 
 

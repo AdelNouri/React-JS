@@ -1,19 +1,21 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { blogAdded } from "../reducers/blogSlice";
+import { addNewBlog } from "../reducers/blogSlice";
 import { useNavigate } from "react-router-dom";
+import { nanoid } from "@reduxjs/toolkit";
 
 const CreateBlog = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [userId, setUserId] = useState("");
+  const [requestStatus, setRequestStatus] = useState("idle");
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const users = useSelector((state) => state.users);
 
-  const canSave = [title, content, userId].every(Boolean)
+  const canSave = [title, content, userId].every(Boolean) && requestStatus == "idle"
 
   const onTitleChange = (e) => {
     setTitle(e.target.value);
@@ -27,12 +29,34 @@ const CreateBlog = () => {
     setUserId(e.target.value);
   };
 
-  const handleSubmitForm = () => {
+  const handleSubmitForm = async () => {
     if (canSave) {
-      dispatch(blogAdded(title, userId, content));
-      setTitle("");
-      setContent("");
-      navigate("/");
+      try {
+        setRequestStatus("pending")
+        await dispatch(
+          addNewBlog({
+            id: nanoid(),
+            date: new Date().toISOString(),
+            title,
+            content,
+            user: userId,
+            reactions: {
+              thumbsUp: 0,
+              hooray: 0,
+              heart: 0,
+              rocket: 0,
+              eyes: 0
+            },
+          })
+        );
+        setTitle("");
+        setContent("");
+        navigate("/");
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setRequestStatus("idle")
+      }
     }
   };
 
@@ -52,8 +76,10 @@ const CreateBlog = () => {
         <label htmlFor="blogAuthor">author: </label>
         <select id="blogAuthor" value={userId} onChange={onAuthorChange}>
           <option value="">select author</option>
-          {users.map(user => (
-            <option key={user.id} value={user.id}>{user.fullname}</option>
+          {users.map((user) => (
+            <option key={user.id} value={user.id}>
+              {user.fullname}
+            </option>
           ))}
         </select>
 

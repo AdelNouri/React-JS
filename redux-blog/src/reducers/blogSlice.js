@@ -1,5 +1,5 @@
 import { createAsyncThunk, createSlice, nanoid } from "@reduxjs/toolkit";
-import { getAllBlogs } from "../services/blogsServices";
+import { createBlog, getAllBlogs } from "../services/blogsServices";
 
 const initialState = {
   blogs: [],
@@ -11,6 +11,11 @@ export const fetchBlogs = createAsyncThunk("/blogs/fetchBlogs", async () => {
   const response = await getAllBlogs();
   return response.data;
 });
+
+export const addNewBlog = createAsyncThunk("/blogs/addNewBlog", async payload => {
+  const response = await createBlog(payload)
+  return response.data
+})
 
 const blogsSlice = createSlice({
   name: "blogs",
@@ -28,6 +33,13 @@ const blogsSlice = createSlice({
             title,
             content,
             user: userId,
+            reactions: {
+              thumbsUp: 0,
+              hooray: 0,
+              heart: 0,
+              rocket: 0,
+              eyes: 0,
+            },
           },
         };
       },
@@ -65,7 +77,10 @@ const blogsSlice = createSlice({
       .addCase(fetchBlogs.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
-      });
+      })
+      .addCase(addNewBlog.fulfilled , (state, action) => {
+        state.blogs.push(action.payload)
+      })
   },
 });
 
