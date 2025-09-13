@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-const UsersList = () => {
+const AuthorsList = () => {
   const users = useSelector((state) => state.users);
 
   const renderedUsers = users.map((user) => (
@@ -17,4 +17,4 @@ const UsersList = () => {
   );
 };
 
-export default UsersList;
+export default AuthorsList;
