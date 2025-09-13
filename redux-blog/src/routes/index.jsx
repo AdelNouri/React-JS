@@ -4,6 +4,7 @@ import MainLayout from "../layouts/MainLayout";
 import SingleBlogPage from "../components/SingleBlogPage";
 import CreateBlog from "../components/CreateBlog";
 import EditBlog from "../components/EditBlog";
+import Authors from "../components/UsersList";
 
 export const router = createBrowserRouter([
     {
@@ -16,6 +17,10 @@ export const router = createBrowserRouter([
             {
                 path: "/",
                 element: <App/>
+            },
+            {
+                path: "/authors",
+                element: <Authors/>
             },
             {
                 path: "/blogs/:blogId",
