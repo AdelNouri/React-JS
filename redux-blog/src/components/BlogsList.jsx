@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { blogDeleted, selectAllBlogs } from "../reducers/blogSlice";
+import { blogDeleted, deleteBlog, selectAllBlogs } from "../reducers/blogSlice";
 import ShowTime from "./ShowTime";
 import ShowAuthor from "./ShowAuthor";
 import ReactionsButtons from "./ReactionsButtons";
@@ -68,11 +68,7 @@ const BlogsList = () => {
         <button
           onClick={() =>
             dispatch(
-              blogDeleted({
-                id: blog.id,
-                title: blog.title,
-                content: blog.content,
-              })
+              deleteBlog(blog.id)
             )
           }
           className="button muted-button"

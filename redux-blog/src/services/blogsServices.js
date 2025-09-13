@@ -34,7 +34,7 @@ export const updateBlog = (blog, blogId) => {
   return axios.put(url);
 };
 
-export const deleteBlog = (blogId) => {
+export const removeBlog = (blogId) => {
   const url = `${SERVER_URL}/blogs/${blogId}`;
   return axios.delete(url);
 };
