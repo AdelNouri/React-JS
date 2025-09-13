@@ -4,11 +4,21 @@ import { blogDeleted, selectAllBlogs } from "../reducers/blogSlice";
 import ShowTime from "./ShowTime";
 import ShowAuthor from "./ShowAuthor";
 import ReactionsButtons from "./ReactionsButtons";
+import { useEffect } from "react";
+import { fetchBlogs } from "../reducers/blogSlice";
 
 const BlogsList = () => {
   const blogs = useSelector(selectAllBlogs);
+  const blogStatus = useSelector((state) => state.blogs.status);
+  
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (blogStatus == "idle") {
+      dispatch(fetchBlogs());
+    }
+  }, [blogStatus, dispatch]);
 
   // for sorting blogs eith time
 

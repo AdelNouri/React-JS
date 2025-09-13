@@ -1,37 +1,16 @@
-import { createSlice, nanoid } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, nanoid } from "@reduxjs/toolkit";
+import { getAllBlogs } from "../services/blogsServices";
 
 const initialState = {
-  blogs: [
-    {
-      id: nanoid(),
-      date: new Date().toISOString(),
-      title: "first post",
-      content: "content of first post",
-      user: "ScYU9NeWJpLbi03D_RiPp",
-      reactions: {
-        thumbsUp: 0,
-        hooray: 0,
-        heart: 0,
-        rocket: 0,
-        eyes: 0,
-      },
-    },
-    {
-      id: nanoid(),
-      date: new Date().toISOString(),
-      title: "seconde post",
-      content: "content of seconde post",
-      user: "IxolYhhiIqnePLTP_EhzJ",
-      reactions: {
-        thumbsUp: 0,
-        hooray: 0,
-        heart: 0,
-        rocket: 0,
-        eyes: 0,
-      },
-    },
-  ],
+  blogs: [],
+  status: "idle",
+  error: null,
 };
+
+export const fetchBlogs = createAsyncThunk("/blogs/fetchBlogs", async () => {
+  const response = await getAllBlogs();
+  return response.data;
+});
 
 const blogsSlice = createSlice({
   name: "blogs",
@@ -74,11 +53,26 @@ const blogsSlice = createSlice({
       }
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchBlogs.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchBlogs.fulfilled, (state, action) => {
+        state.status = "completed";
+        state.blogs = action.payload;
+      })
+      .addCase(fetchBlogs.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      });
+  },
 });
 
 export const selectAllBlogs = (state) => state.blogs.blogs;
 export const selectBlogById = (state, blogId) =>
   state.blogs.blogs.find((blog) => blog.id == blogId);
+
 export const { blogAdded, blogUpdated, blogDeleted, reactionAdded } =
   blogsSlice.actions;
 
