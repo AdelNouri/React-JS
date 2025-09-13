@@ -29,9 +29,9 @@ export const createBlog = (blog) => {
 };
 
 
-export const updateBlog = (blog, blogId) => {
-  const url = `${SERVER_URL}/blogs/${blogId}`;
-  return axios.put(url);
+export const updateBlog = (editedBlog) => {
+  const url = `${SERVER_URL}/blogs/${editedBlog.id}`;
+  return axios.put(url, editedBlog);
 };
 
 export const removeBlog = (blogId) => {

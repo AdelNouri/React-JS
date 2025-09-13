@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { blogUpdated, selectBlogById } from "../reducers/blogSlice";
+import { blogUpdated, editBlog, selectBlogById } from "../reducers/blogSlice";
 import { useNavigate, useParams } from "react-router-dom";
 
 const EditBlog = () => {
   const { blogId } = useParams();
-  const blog = useSelector((state) => selectBlogById(state , blogId));
+  const blog = useSelector((state) => selectBlogById(state, blogId));
 
   const [title, setTitle] = useState(blog.title);
   const [content, setContent] = useState(blog.content);
@@ -23,7 +23,16 @@ const EditBlog = () => {
 
   const handleSubmitForm = () => {
     if (title && content) {
-      dispatch(blogUpdated({ id: blog.id, title, content }));
+      dispatch(
+        editBlog({
+          id: blog.id,
+          date: blog.date,
+          title,
+          content,
+          user: blog.user,
+          reactions: blog.reactions,
+        })
+      );
       setTitle("");
       setContent("");
       navigate("/");
