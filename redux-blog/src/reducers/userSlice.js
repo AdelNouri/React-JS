@@ -1,20 +1,5 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice, nanoid } from "@reduxjs/toolkit";
 import { getAllUsers } from "../services/blogsServices";
-
-const initialState = [
-  {
-    id: "1",
-    fullname: "adel nouri",
-  },
-  {
-    id: "2",
-    fullname: "ali nouri",
-  },
-  {
-    id: "3",
-    fullname: "mohammad baghery",
-  },
-];
 
 export const fetchAllUsers = createAsyncThunk("/users/fetchUsers", async () => {
   const response = await getAllUsers();
@@ -24,8 +9,17 @@ export const fetchAllUsers = createAsyncThunk("/users/fetchUsers", async () => {
 
 const usersSlice = createSlice({
   name: "users",
-  initialState,
+  initialState: [],
   reducers: {},
+  extraReducers(builder) {
+    builder.addCase(fetchAllUsers.fulfilled, (state, action) => {
+        console.log(action.payload)
+      return action.payload;
+      // With returning a new result Immer will existing state with whatever we return
+    });
+  },
 });
+
+
 
 export default usersSlice.reducer;

@@ -40,3 +40,9 @@ export const fetchBlogs = createAsynThunk("blogs/fetchBlogs", async () => {
 dispatch(fetchBlogs()); //returns 'blogs/fetchBlogs/pending' action
 //if promise is resolved return 'blogs/fetchBlogs/fulfilled' action
 //if promise is rejected return 'blogs/fetchBlogs/rejected' action
+
+//extraReducer
+
+//builder.addCase => یک ریدوسر تعریف میکنه که هندل میکنه تنها یک نوع اکشن شناخته شده
+//builder.addMatcher => یک ریدوسر تعریف میکنه که به هر اکشنی جواب میده در صورتی که متچر true باشه
+//builder.addDefault => یک ریدوسر تعریف میکنه که زمانی اجرا میشه که هیچ ریدوسری در جواب به اکشن نباشه

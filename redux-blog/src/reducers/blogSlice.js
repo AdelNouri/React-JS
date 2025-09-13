@@ -7,7 +7,7 @@ const initialState = {
       date: new Date().toISOString(),
       title: "first post",
       content: "content of first post",
-      user: "1",
+      user: "ScYU9NeWJpLbi03D_RiPp",
       reactions: {
         thumbsUp: 0,
         hooray: 0,
@@ -21,7 +21,7 @@ const initialState = {
       date: new Date().toISOString(),
       title: "seconde post",
       content: "content of seconde post",
-      user: "3",
+      user: "IxolYhhiIqnePLTP_EhzJ",
       reactions: {
         thumbsUp: 0,
         hooray: 0,
