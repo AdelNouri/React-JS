@@ -1,5 +1,11 @@
 import { createAsyncThunk, createSlice, nanoid } from "@reduxjs/toolkit";
-import { createBlog, getAllBlogs, removeBlog, updateBlog } from "../services/blogsServices";
+import {
+  createBlog,
+  createUser,
+  getAllBlogs,
+  removeBlog,
+  updateBlog,
+} from "../services/blogsServices";
 
 const initialState = {
   blogs: [],
@@ -12,21 +18,31 @@ export const fetchBlogs = createAsyncThunk("/blogs/fetchBlogs", async () => {
   return response.data;
 });
 
-export const addNewBlog = createAsyncThunk("/blogs/addNewBlog", async payload => {
-  const response = await createBlog(payload)
-  return response.data
-})
+export const addNewBlog = createAsyncThunk(
+  "/blogs/addNewBlog",
+  async (payload) => {
+    const response = await createBlog(payload);
+    return response.data;
+  }
+);
 
-export const deleteBlog = createAsyncThunk("/blogs/deleteBlog", async blogId => {
-  await removeBlog(blogId)
-  return blogId
-})
+export const deleteBlog = createAsyncThunk(
+  "/blogs/deleteBlog",
+  async (blogId) => {
+    await removeBlog(blogId);
+    return blogId;
+  }
+);
 
-export const editBlog = createAsyncThunk("/blogs/editBlog", async editedBlog => {
-  const response = await updateBlog(editedBlog)
-  console.log(response)
-  return response.data
-})
+export const editBlog = createAsyncThunk(
+  "/blogs/editBlog",
+  async (editedBlog) => {
+    const response = await updateBlog(editedBlog);
+    console.log(response);
+    return response.data;
+  }
+);
+
 
 const blogsSlice = createSlice({
   name: "blogs",
@@ -89,18 +105,19 @@ const blogsSlice = createSlice({
         state.status = "failed";
         state.error = action.error.message;
       })
-      .addCase(addNewBlog.fulfilled , (state, action) => {
-        state.blogs.push(action.payload)
+      .addCase(addNewBlog.fulfilled, (state, action) => {
+        state.blogs.push(action.payload);
       })
       .addCase(deleteBlog.fulfilled, (state, aciton) => {
-        state.blogs = state.blogs.filter(blog => blog.id != aciton.payload)
+        state.blogs = state.blogs.filter((blog) => blog.id != aciton.payload);
       })
       .addCase(editBlog.fulfilled, (state, action) => {
-        console.log(action)
-        const {id} = action.payload
-        const editedBlogIndex = state.blogs.findIndex(blog => blog.id == id)
-        state.blogs[editedBlogIndex] = action.payload
+        console.log(action);
+        const { id } = action.payload;
+        const editedBlogIndex = state.blogs.findIndex((blog) => blog.id == id);
+        state.blogs[editedBlogIndex] = action.payload;
       })
+      
   },
 });
 

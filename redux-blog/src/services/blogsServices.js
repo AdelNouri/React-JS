@@ -38,3 +38,13 @@ export const removeBlog = (blogId) => {
   const url = `${SERVER_URL}/blogs/${blogId}`;
   return axios.delete(url);
 };
+
+export const createUser = (user) => {
+  const url = `${SERVER_URL}/users`;
+  return axios.post(url, user);
+};
+
+export const removeUser = (userId) => {
+  const url = `${SERVER_URL}/users/${userId}`;
+  return axios.delete(url);
+};
