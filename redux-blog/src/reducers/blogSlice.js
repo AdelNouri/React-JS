@@ -3,7 +3,6 @@ import {
   createEntityAdapter,
   createSelector,
   createSlice,
-  nanoid,
 } from "@reduxjs/toolkit";
 import {
   createBlog,
@@ -12,11 +11,11 @@ import {
   updateBlog,
 } from "../services/blogsServices";
 
-const blogsAdapter = createEntityAdapter({
+const blogAdapter = createEntityAdapter({
   sortComparer: (a, b) => a.date.localeCompare(b.date),
 });
 
-const initialState = blogsAdapter.getInitialState({
+const initialState = blogAdapter.getInitialState({
   status: "idle",
   error: null,
 });
@@ -80,20 +79,15 @@ const blogsSlice = createSlice({
       })
       .addCase(fetchBlogs.fulfilled, (state, action) => {
         state.status = "completed";
-        blogsAdapter.upsertMany(state, action.payload);
+        blogAdapter.upsertMany(state, action.payload);
       })
       .addCase(fetchBlogs.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       })
-      .addCase(addNewBlog.fulfilled, blogsAdapter.addOne)
-      .addCase(deleteBlog.fulfilled, blogsAdapter.removeOne)
-      .addCase(editBlog.fulfilled, (state, action) => {
-        console.log(action);
-        const { id } = action.payload;
-        const editedBlogIndex = state.blogs.findIndex((blog) => blog.id == id);
-        state.blogs[editedBlogIndex] = action.payload;
-      });
+      .addCase(addNewBlog.fulfilled, blogAdapter.addOne)
+      .addCase(deleteBlog.fulfilled, blogAdapter.removeOne)
+      .addCase(editBlog.fulfilled, blogAdapter.updateOne)
   },
 });
 
@@ -105,7 +99,7 @@ export const {
   selectAll: selectAllBlogs,
   selectById: selectBlogById,
   selectIds,
-} = blogsAdapter.getSelectors((state) => state.blogs);
+} = blogAdapter.getSelectors((state) => state.blogs);
 
 export const selectAuthorBlogs = createSelector(
   [selectAllBlogs, (state, authorId) => authorId],

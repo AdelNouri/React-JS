@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { addNewUser, deleteUser } from "../reducers/userSlice";
+import { addNewUser, deleteUser, selectAllAuthors } from "../reducers/userSlice";
 import { nanoid } from "@reduxjs/toolkit";
 
 const AuthorsList = () => {
-  const users = useSelector((state) => state.users);
+  const users = useSelector(selectAllAuthors);
 
   const [user, setUser] = useState("");
 
@@ -16,9 +16,9 @@ const AuthorsList = () => {
     setUser(e.target.value);
   };
 
-  const handleDelete = userId => {
-    dispatch(deleteUser(userId))
-  }
+  const handleDelete = (userId) => {
+    dispatch(deleteUser(userId));
+  };
 
   const handleSubmit = () => {
     dispatch(addNewUser({ id: nanoid(), fullname: user }));
@@ -28,7 +28,12 @@ const AuthorsList = () => {
   const renderedUsers = users.map((user) => (
     <li key={user.id}>
       <Link to={`/authors/${user.id}`}>{user.fullname}</Link>
-      <Link style={{marginLeft: "10px", marginTop: "2px", color: "tomato"}} onClick={() => handleDelete(user.id)}>&otimes;</Link>
+      <Link
+        style={{ marginLeft: "10px", marginTop: "2px", color: "tomato" }}
+        onClick={() => handleDelete(user.id)}
+      >
+        &otimes;
+      </Link>
     </li>
   ));
   return (
