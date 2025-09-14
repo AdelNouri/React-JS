@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import { useParams, Link } from "react-router-dom";
-import { deleteBlog, selectAllBlogs } from "../reducers/blogSlice";
+import { deleteBlog, selectAllBlogs, selectAuthorBlogs } from "../reducers/blogSlice";
 import ShowTime from "./ShowTime";
 import ShowAuthor from "./ShowAuthor";
 import ReactionsButtons from "./ReactionsButtons";
@@ -10,18 +10,8 @@ const AuthorPage = () => {
   const author = useSelector((state) =>
     state.users.find((user) => user.id == authorId)
   );
-  const authorBlogs = useSelector((state) => {
-    const allBlogs = selectAllBlogs(state);
-    return allBlogs.filter((blog) => blog.user == authorId);
-  });
+  const authorBlogs = useSelector((state) => selectAuthorBlogs(state, authorId));
 
-  console.log(authorBlogs);
-
-  const blogTitles = authorBlogs.map((blog) => (
-    <li key={blog.id}>
-      <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
-    </li>
-  ));
 
   return (
     <section>

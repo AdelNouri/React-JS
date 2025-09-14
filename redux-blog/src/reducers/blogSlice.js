@@ -1,4 +1,9 @@
-import { createAsyncThunk, createSlice, nanoid } from "@reduxjs/toolkit";
+import {
+  createAsyncThunk,
+  createSelector,
+  createSlice,
+  nanoid,
+} from "@reduxjs/toolkit";
 import {
   createBlog,
   createUser,
@@ -42,7 +47,6 @@ export const editBlog = createAsyncThunk(
     return response.data;
   }
 );
-
 
 const blogsSlice = createSlice({
   name: "blogs",
@@ -116,14 +120,18 @@ const blogsSlice = createSlice({
         const { id } = action.payload;
         const editedBlogIndex = state.blogs.findIndex((blog) => blog.id == id);
         state.blogs[editedBlogIndex] = action.payload;
-      })
-      
+      });
   },
 });
 
 export const selectAllBlogs = (state) => state.blogs.blogs;
 export const selectBlogById = (state, blogId) =>
   state.blogs.blogs.find((blog) => blog.id == blogId);
+
+export const selectAuthorBlogs = createSelector(
+  [selectAllBlogs, (state, authorId) => authorId],
+  (blogs, authorId) => blogs.filter((blog) => blog.user === authorId)
+);
 
 export const { blogAdded, blogUpdated, blogDeleted, reactionAdded } =
   blogsSlice.actions;
