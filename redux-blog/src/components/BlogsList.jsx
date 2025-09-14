@@ -1,11 +1,13 @@
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
-import { deleteBlog, selectAllBlogs } from "../reducers/blogSlice";
+import { useDispatch } from "react-redux";
+import { deleteBlog } from "../reducers/blogSlice";
 import ShowTime from "./ShowTime";
 import ShowAuthor from "./ShowAuthor";
 import ReactionsButtons from "./ReactionsButtons";
-import { memo, useEffect } from "react";
-import { fetchBlogs } from "../reducers/blogSlice";
+
+import { useMemo } from "react";
+
+import { Link, useNavigate } from "react-router-dom";
+import { useGetBlogsQuery } from "../api/apiSlice";
 import Spinner from "./Spinner";
 
 let Blog = ({ blog }) => {
@@ -51,20 +53,16 @@ let Blog = ({ blog }) => {
   );
 };
 
-Blog = memo(Blog);
-
 const BlogsList = () => {
-  const blogs = useSelector(selectAllBlogs);
-  const blogStatus = useSelector((state) => state.blogs.status);
-  const error = useSelector((state) => state.blogs.error);
+  const {
+    data: blogs = [],
+    isLoading,
+    isSuccess,
+    isError,
+    error,
+  } = useGetBlogsQuery();
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
-  useEffect(() => {
-    if (blogStatus == "idle") {
-      dispatch(fetchBlogs());
-    }
-  }, [blogStatus, dispatch]);
 
   // for sorting blogs eith time
 
@@ -72,15 +70,19 @@ const BlogsList = () => {
   //   .slice()
   //   .sort((a, b) => b.date.localeCompare(a.date));
 
+  const sortedBlogs = useMemo(() => {
+    const sortedBlogs = blogs.slice();
+    sortedBlogs.sort((a, b) => b.date.localeCompare(a.date));
+    return sortedBlogs;
+  }, [blogs]);
+
   let content;
 
-  if (blogStatus === "loading") {
+  if (isLoading) {
     content = <Spinner text="Loading..." />;
-  } else if (blogStatus === "completed") {
-    content = [...blogs]
-      .reverse()
-      .map((blog) => <Blog key={blog.id} blog={blog} />);
-  } else if (blogStatus === "completed") {
+  } else if (isSuccess) {
+    content = sortedBlogs.map((blog) => <Blog key={blog.id} blog={blog} />);
+  } else if (isError) {
     content = <div>{error}</div>;
   }
 
