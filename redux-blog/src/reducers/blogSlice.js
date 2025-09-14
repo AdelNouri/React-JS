@@ -1,22 +1,25 @@
 import {
   createAsyncThunk,
+  createEntityAdapter,
   createSelector,
   createSlice,
   nanoid,
 } from "@reduxjs/toolkit";
 import {
   createBlog,
-  createUser,
   getAllBlogs,
   removeBlog,
   updateBlog,
 } from "../services/blogsServices";
 
-const initialState = {
-  blogs: [],
+const blogsAdapter = createEntityAdapter({
+  sortComparer: (a, b) => a.date.localeCompare(b.date),
+});
+
+const initialState = blogsAdapter.getInitialState({
   status: "idle",
   error: null,
-};
+});
 
 export const fetchBlogs = createAsyncThunk("/blogs/fetchBlogs", async () => {
   const response = await getAllBlogs();
@@ -52,40 +55,14 @@ const blogsSlice = createSlice({
   name: "blogs",
   initialState: initialState,
   reducers: {
-    blogAdded: {
-      reducer(state, action) {
-        state.blogs.push(action.payload);
-      },
-      prepare(title, userId, content) {
-        return {
-          payload: {
-            id: nanoid(),
-            date: new Date().toISOString(),
-            title,
-            content,
-            user: userId,
-            reactions: {
-              thumbsUp: 0,
-              hooray: 0,
-              heart: 0,
-              rocket: 0,
-              eyes: 0,
-            },
-          },
-        };
-      },
-    },
     blogUpdated: (state, action) => {
       const { id, title, content } = action.payload;
-      const existingBlog = state.blogs.find((blog) => blog.id == id);
+      const existingBlog = state.entities[id]
 
       if (existingBlog) {
         existingBlog.title = title;
         existingBlog.content = content;
       }
-    },
-    blogDeleted: (state, action) => {
-      state.blogs = state.blogs.filter((blog) => blog.id != action.payload.id);
     },
     reactionAdded: (state, action) => {
       const { blogId, reaction } = action.payload;
@@ -103,18 +80,14 @@ const blogsSlice = createSlice({
       })
       .addCase(fetchBlogs.fulfilled, (state, action) => {
         state.status = "completed";
-        state.blogs = action.payload;
+        blogsAdapter.upsertMany(state, action.payload);
       })
       .addCase(fetchBlogs.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       })
-      .addCase(addNewBlog.fulfilled, (state, action) => {
-        state.blogs.push(action.payload);
-      })
-      .addCase(deleteBlog.fulfilled, (state, aciton) => {
-        state.blogs = state.blogs.filter((blog) => blog.id != aciton.payload);
-      })
+      .addCase(addNewBlog.fulfilled, blogsAdapter.addOne)
+      .addCase(deleteBlog.fulfilled, blogsAdapter.removeOne)
       .addCase(editBlog.fulfilled, (state, action) => {
         console.log(action);
         const { id } = action.payload;
@@ -124,9 +97,15 @@ const blogsSlice = createSlice({
   },
 });
 
-export const selectAllBlogs = (state) => state.blogs.blogs;
-export const selectBlogById = (state, blogId) =>
-  state.blogs.blogs.find((blog) => blog.id == blogId);
+// export const selectAllBlogs = (state) => state.blogs.blogs;
+// export const selectBlogById = (state, blogId) =>
+//   state.blogs.blogs.find((blog) => blog.id == blogId);
+
+export const {
+  selectAll: selectAllBlogs,
+  selectById: selectBlogById,
+  selectIds,
+} = blogsAdapter.getSelectors((state) => state.blogs);
 
 export const selectAuthorBlogs = createSelector(
   [selectAllBlogs, (state, authorId) => authorId],
