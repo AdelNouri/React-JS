@@ -4,8 +4,9 @@ export const apiSlice = createApi({
     reducerPath: "api",
     baseQuery: fetchBaseQuery({baseUrl: "http://localhost:9000"}),
     endpoints: builder => ({
-        getBlogs: builder.query({query: () => "/blogs"})
+        getBlogs: builder.query({query: () => "/blogs"}),
+        getBlog: builder.query({query: (blogId) => `/blogs/${blogId}`})
     })
 })
 
-export const {useGetBlogsQuery} = apiSlice
+export const {useGetBlogsQuery, useGetBlogQuery} = apiSlice

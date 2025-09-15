@@ -1,14 +1,19 @@
 import { useParams } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { selectBlogById } from "../reducers/blogSlice";
 import ShowAuthor from "./ShowAuthor";
 import ShowTime from "./ShowTime";
+import { useGetBlogQuery } from "../api/apiSlice";
+import Spinner from "./Spinner";
 
 const SingleBlogPage = () => {
   const { blogId } = useParams();
-  const blog = useSelector((state) => selectBlogById(state, blogId));
+  const {
+    data: blog,
+    isFetching,
+    isSuccess,
+    isError,
+  } = useGetBlogQuery(blogId);
 
-  if (!blog) {
+  if (isError) {
     return (
       <section>
         <h2>The post you are looking for does not exist</h2>
@@ -16,8 +21,12 @@ const SingleBlogPage = () => {
     );
   }
 
-  return (
-    <section>
+  let content;
+
+  if (isFetching) {
+    content = <Spinner text="Loading ..." />;
+  } else if (isSuccess) {
+    content = (
       <article className="blog">
         <h2>{blog.title}</h2>
 
@@ -28,8 +37,12 @@ const SingleBlogPage = () => {
 
         <p className="blog-content">{blog.content}</p>
       </article>
-    </section>
-  );
+    );
+  } else if (isError) {
+    content = <h2>The post you are looking for does not exist</h2>;
+  }
+
+  return <section>{content}</section>;
 };
 
 export default SingleBlogPage;
