@@ -4,11 +4,11 @@ import { deleteBlog, selectAuthorBlogs } from "../reducers/blogSlice";
 import ShowTime from "./ShowTime";
 import ShowAuthor from "./ShowAuthor";
 import ReactionsButtons from "./ReactionsButtons";
-import { selectAuthorById } from "../reducers/userSlice";
+import { selectUserById } from "../reducers/userSlice";
 
 const AuthorPage = () => {
   const { authorId } = useParams();
-  const author = useSelector((state) => selectAuthorById(state, authorId));
+  const author = useSelector((state) => selectUserById(state, authorId));
   const authorBlogs = useSelector((state) =>
     selectAuthorBlogs(state, authorId)
   );

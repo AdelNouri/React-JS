@@ -1,11 +1,11 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { addNewUser, deleteUser, selectAllAuthors } from "../reducers/userSlice";
+import { selectAllUsers } from "../reducers/userSlice";
 import { nanoid } from "@reduxjs/toolkit";
 
 const AuthorsList = () => {
-  const users = useSelector(selectAllAuthors);
+  const users = useSelector(selectAllUsers);
 
   const [user, setUser] = useState("");
 

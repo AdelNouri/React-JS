@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { nanoid } from "@reduxjs/toolkit";
-import { selectAllAuthors } from "../reducers/userSlice";
+import {  selectAllUsers } from "../reducers/userSlice";
 import { useAddNewBlogMutation } from "../api/apiSlice";
 
 const CreateBlog = () => {
@@ -14,7 +14,7 @@ const CreateBlog = () => {
 
   const navigate = useNavigate();
 
-  const users = useSelector((state) => selectAllAuthors(state));
+  const users = useSelector((state) => selectAllUsers(state));
 
   const canSave = [title, content, userId].every(Boolean) && !isLoading;
 
