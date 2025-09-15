@@ -7,9 +7,6 @@ const EditBlog = () => {
   const { blogId } = useParams();
   const { data: blog, isFetching, isSuccess, isError } = useGetBlogQuery(blogId);
 
-  console.log(blogId);
-  console.log(blog);
-
   const [updateBlog] = useEditBlogMutation();
 
   const [title, setTitle] = useState("");
