@@ -1,21 +1,22 @@
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addNewBlog } from "../reducers/blogSlice";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { nanoid } from "@reduxjs/toolkit";
+import { selectAllAuthors } from "../reducers/userSlice";
+import { useAddNewBlogMutation } from "../api/apiSlice";
 
 const CreateBlog = () => {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [userId, setUserId] = useState("");
-  const [requestStatus, setRequestStatus] = useState("idle");
+
+  const [addNewBlog, { isLoading }] = useAddNewBlogMutation();
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
-  const users = useSelector((state) => state.users);
+  const users = useSelector((state) => selectAllAuthors(state));
 
-  const canSave = [title, content, userId].every(Boolean) && requestStatus == "idle"
+  const canSave = [title, content, userId].every(Boolean) && !isLoading;
 
   const onTitleChange = (e) => {
     setTitle(e.target.value);
@@ -32,30 +33,26 @@ const CreateBlog = () => {
   const handleSubmitForm = async () => {
     if (canSave) {
       try {
-        setRequestStatus("pending")
-        await dispatch(
-          addNewBlog({
-            id: nanoid(),
-            date: new Date().toISOString(),
-            title,
-            content,
-            user: userId,
-            reactions: {
-              thumbsUp: 0,
-              hooray: 0,
-              heart: 0,
-              rocket: 0,
-              eyes: 0
-            },
-          })
-        );
+        await addNewBlog({
+          id: nanoid(),
+          date: new Date().toISOString(),
+          title,
+          content,
+          user: userId,
+          reactions: {
+            thumbsUp: 0,
+            hooray: 0,
+            heart: 0,
+            rocket: 0,
+            eyes: 0,
+          },
+        }).unwrap();
+
         setTitle("");
         setContent("");
         navigate("/");
       } catch (error) {
         console.error(error);
-      } finally {
-        setRequestStatus("idle")
       }
     }
   };

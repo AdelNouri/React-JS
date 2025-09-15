@@ -52,11 +52,11 @@ export const editBlog = createAsyncThunk(
 
 const blogsSlice = createSlice({
   name: "blogs",
-  initialState: initialState,
+  initialState,
   reducers: {
     blogUpdated: (state, action) => {
       const { id, title, content } = action.payload;
-      const existingBlog = state.entities[id]
+      const existingBlog = state.entities[id];
 
       if (existingBlog) {
         existingBlog.title = title;
@@ -87,7 +87,7 @@ const blogsSlice = createSlice({
       })
       .addCase(addNewBlog.fulfilled, blogAdapter.addOne)
       .addCase(deleteBlog.fulfilled, blogAdapter.removeOne)
-      .addCase(editBlog.fulfilled, blogAdapter.updateOne)
+      .addCase(editBlog.fulfilled, blogAdapter.updateOne);
   },
 });
 
