@@ -60,6 +60,7 @@ const BlogsList = () => {
     isSuccess,
     isError,
     error,
+    refetch,
   } = useGetBlogsQuery();
 
   const navigate = useNavigate();
@@ -96,6 +97,10 @@ const BlogsList = () => {
         Create new blog
       </button>
       <h2>All Blogs</h2>
+      <button className="button" onClick={refetch}>
+        {" "}
+        Refresh blogs
+      </button>
       {content}
     </section>
   );
