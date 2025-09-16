@@ -2,6 +2,7 @@ import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import blogsReducer from "../reducers/blogSlice";
 import usersReducer from "../reducers/userSlice";
 import { apiSlice } from "../api/apiSlice";
+import { extendedApiSlice } from "../reducers/userSlice";
 
 export const store = configureStore({
   reducer: {
@@ -15,4 +16,6 @@ export const store = configureStore({
 
 // store.dispatch(fetchUsers())
 
-store.dispatch(apiSlice.endpoints.getUsers.initiate());
+// store.dispatch(apiSlice.endpoints.getUsers.initiate());
+
+store.dispatch(extendedApiSlice.endpoints.getUsers.initiate())
