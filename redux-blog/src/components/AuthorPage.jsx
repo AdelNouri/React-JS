@@ -5,18 +5,36 @@ import ShowTime from "./ShowTime";
 import ShowAuthor from "./ShowAuthor";
 import ReactionsButtons from "./ReactionsButtons";
 import { selectUserById } from "../reducers/userSlice";
+import { useMemo } from "react";
+import { useGetBlogsQuery } from "../api/apiSlice";
+import { createSelector } from "@reduxjs/toolkit";
 
 const AuthorPage = () => {
   const { authorId } = useParams();
   const author = useSelector((state) => selectUserById(state, authorId));
-  const authorBlogs = useSelector((state) =>
-    selectAuthorBlogs(state, authorId)
-  );
+
+  const selectUserBlogs = useMemo(() => {
+    const emptyArray = [];
+
+    return createSelector(
+      (res) => res.data,
+      (res, userId) => userId,
+      (data, userId) =>
+        data?.filter((blog) => blog.user === userId) ?? emptyArray
+    );
+  }, []);
+
+  const { userBlogs } = useGetBlogsQuery(undefined, {
+    selectFromResult: (result) => ({
+      ...result,
+      userBlogs: selectUserBlogs(result, authorId),
+    }),
+  });
 
   return (
     <section>
       <h2>{author.fullname}</h2>
-      {authorBlogs.map((blog) => (
+      {userBlogs.map((blog) => (
         <article
           key={blog.id}
           style={{ padding: "1rem" }}
