@@ -1,5 +1,4 @@
 import { useDispatch } from "react-redux";
-import { deleteBlog } from "../reducers/blogSlice";
 import ShowTime from "./ShowTime";
 import ShowAuthor from "./ShowAuthor";
 import ReactionsButtons from "./ReactionsButtons";
@@ -7,11 +6,12 @@ import ReactionsButtons from "./ReactionsButtons";
 import { useMemo } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
-import { useGetBlogsQuery } from "../api/apiSlice";
+import { useDeleteBlogMutation, useGetBlogsQuery } from "../api/apiSlice";
 import Spinner from "./Spinner";
 
 let Blog = ({ blog }) => {
   const dispatch = useDispatch();
+  const [deleteBlog] = useDeleteBlogMutation();
 
   return (
     <>

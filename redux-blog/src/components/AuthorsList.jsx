@@ -1,14 +1,20 @@
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { selectAllUsers } from "../reducers/userSlice";
+import {
+  selectAllUsers,
+  useAddNewUserMutation,
+  useDeleteUserMutation,
+} from "../reducers/userSlice";
 import { nanoid } from "@reduxjs/toolkit";
 
 const AuthorsList = () => {
   const users = useSelector(selectAllUsers);
-
   const [user, setUser] = useState("");
 
+  const [addNewAuthor] = useAddNewUserMutation();
+  const [deleteAuthor] = useDeleteUserMutation();
+  
   const dispatch = useDispatch();
   let canSave = Boolean(user);
 
@@ -17,11 +23,11 @@ const AuthorsList = () => {
   };
 
   const handleDelete = (userId) => {
-    dispatch(deleteUser(userId));
+    dispatch(deleteAuthor(userId));
   };
 
   const handleSubmit = () => {
-    dispatch(addNewUser({ id: nanoid(), fullname: user }));
+    dispatch(addNewAuthor({ id: nanoid(), fullname: user }));
     setUser("");
   };
 
