@@ -1,6 +1,5 @@
 import "./globals.css";
-
-import localFont from "next/font/local";
+import "react-loading-skeleton/dist/skeleton.css";
 
 // import { Vazirmatn } from "next/font/google";
 
@@ -8,6 +7,8 @@ import localFont from "next/font/local";
 //     subsets: ["arabic", "latin"],
 //     display: "swap",
 // });
+
+import localFont from "next/font/local";
 
 const vazir = localFont({
     src: "./Vazir.woff2",
