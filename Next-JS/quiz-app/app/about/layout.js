@@ -1,19 +1,8 @@
-export default function Layout({ children, info, skills }) {
-    const adminAuth = () => {
-        return false;
-    };
-
-    const isAdmin = adminAuth();
+export default function Layout({ children, modal }) {
     return (
-        <div
-            className="container"
-            style={{
-                textAlign: "center",
-            }}
-        >
+        <div className="container mx-auto">
             {children}
-            {isAdmin && info}
-            {skills}
+            {modal}
         </div>
     );
 }
