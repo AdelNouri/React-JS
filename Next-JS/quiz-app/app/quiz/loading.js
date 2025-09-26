@@ -6,9 +6,9 @@ export default function Loading({ count }) {
             count={count}
             direction="rtl"
             duration={2}
-            height={60}
-            // baseColor="#f8f8f8"
-            // highlightColor="#d8d8d8"
+            height={50}
+            baseColor="#f8f8f8"
+            highlightColor="#d8d8d8"
         />
     );
 }
