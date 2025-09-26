@@ -58,7 +58,7 @@ export default function Page() {
   };
 
   return (
-    <>
+    <div className="container">
       <h1>صفحه آزمون</h1>
       <div>
         {!showResult ? (
@@ -111,6 +111,6 @@ export default function Page() {
           </div>
         )}
       </div>
-    </>
+    </div>
   );
 }
