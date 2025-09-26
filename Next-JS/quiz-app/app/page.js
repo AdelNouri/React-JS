@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 export default function Home() {
-  throw new Error("این یک ارور فیک است")
 
   return (
     <main>
