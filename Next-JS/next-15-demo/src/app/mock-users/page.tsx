@@ -7,14 +7,14 @@ type MockUser = {
 };
 
 export default async function Users() {
-    const res = await fetch("https://6776f65380a79bf91900aa38.mockapi.io/users");
+    const res = await fetch("https://68de7121d7b591b4b78f8dd9.mockapi.io/users");
     const users = await res.json();
 
     const addUser = async (formData: FormData) => {
         "use server"
         const name = formData.get("name");
         const res = await fetch(
-            "https://6776f65380a79bf91900aa38.mockapi.io/users",
+            "https://68de7121d7b591b4b78f8dd9.mockapi.io/users",
             {
               method: "POST",
               headers: {
